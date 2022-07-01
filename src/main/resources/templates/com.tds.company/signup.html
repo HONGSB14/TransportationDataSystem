@@ -6,14 +6,15 @@
 </head>
 <body>
 <div th:replace="header.html :: header"></div>
-<div id="companysignup" class="container">
+
+<div class="container">
     <!-- 기입란 -->
     <div class="col-md-12 py-5">
         <div class="offset-4 col-md-4">
 
             <form>
+                <!-- 가격 선택 란 -->
                 <div class="py-3">
-                    <!-- 가격 선택 란 -->
                     <div class="col-md-4 text-left">가격선택 (월)<Strong class="must_do">*</Strong></div>
                     <div>
                         <select name="price" class="form-control text-center" id="selectprice">
@@ -28,38 +29,28 @@
                     <span id="pricecheck"></span>
                 </div>
 
-                <!-- 사업자 등록번호 입력 란  -->
-                <div class="py-3">
-                    <div class="col-md-4 text-left">사업자 등록번호<Strong class="must_do">*</Strong></div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <input id="three" name="three" type="text" class="form-control">
-                        </div>
-
-                        <div class="col-md-3 text-bottom">
-                            <input id="two" name="two" type="text" class="form-control">
-                        </div>
-
-                        <div class="col-md-7">
-                            <input id="five" name="five" type="text" class="form-control">
-                        </div>
-                    </div>
-                    <!-- 중복체크 안내표시 -->
-                    <span id="bncheck"></span>
-                    <span class="check" id="bncheck2"></span>
-                </div>
-
                 <!-- 회사이름  입력 란 -->
                 <div class="py-3">
                     <div class="col-md-4 text-left">회사 이름<Strong class="must_do">*</Strong></div>
                     <div>
-                        <input type="text" class="form-control" name="companyname" id="companyname">
+                        <input type="text" class="form-control" name="name" id="name">
                     </div>
                     <!-- 중복체크 안내표시 -->
                     <span id="namecheck"></span>
                     <span class="check" id="namecheck2"></span>
                 </div>
 
+                <!-- 사업자 등록번호 입력 란  -->
+                <div class="py-3">
+                    <div class="col-md-5 text-left">사업자 등록번호<Strong class="must_do">*</Strong></div>
+                    <div>
+                        <input type="text" id="crn" name="crn"  class="form-control" placeholder="('-')제외  10자리 ">
+                    </div>
+                    <!-- 중복체크 안내표시 -->
+                    <span id="bncheck"></span>
+                    <span class="check" id="bncheck2"></span>
+                </div>
+                <button></button>
                 <!-- 회사가입고유번호  입력 란 -->
                 <div class="py-3">
                     <div class="col-md-4 text-left">가입고유번호<Strong class="must_do">*</Strong></div>
@@ -119,7 +110,7 @@
             </form>
             <!-- 등록버튼 -->
             <div class="offset-4 col-md-4 py-5">
-                <input class="form-control" type="submit" onclick="companysignup()" value="등록하기">
+                <input class="form-control" type="submit" onclick="companySignup()" value="등록하기">
             </div>
 
         </div>

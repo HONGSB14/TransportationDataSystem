@@ -6,6 +6,10 @@
 }
 *{font-family:'KOHIBaeumOTF';}
 
+a{text-decoration: none; color: black }
+
+.check{color: red};
+
 #must_do{color: red;}
 
 #mainp{font-size: 65px;  color: BLACK;}
@@ -18,6 +22,6 @@
 
 #main1{background: yellow};
 
-.check{color: red;}
 
-a{text-decoration: none; color: black }
+
+
