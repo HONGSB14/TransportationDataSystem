@@ -50,18 +50,7 @@ $(function(){ //문서 시작
 		}
 
 	});
-	$.ajax({    //db 처리
 
-
-	});
-	 if(pass[2]== true && pass[1]== true){
-         $("#cuum").ready(function(){
-
-           const ran=Math.random();
-           const random=Math.floor(ran*899999+100000);
-            $("#cnum").val(random);
-          });
-     }
 	//결제은행 입력 란
 	//신한
 	$("#sinhanbank").click(function(){
@@ -122,56 +111,40 @@ $(function(){ //문서 시작
 	});
 }); //문서 끝 (유효성 검사)
 
-function companySignup(){
-    let form=$("")
-	let check = true;
+    function companySignup(){
+        let form=$("")
+        let check = true;
 
-	for(let i = 0; i<pass.length; i++){
+        for(let i = 0; i<pass.length; i++){
+            if(pass[i] == false){
+                check =false;
+            }
+        }
+        if(check){
 
-		if(pass[i] == false){
-			check =false;
-		}
-	}
-	if(check){
+        }else{
+            alert("필수 입력 사항이 모두 입력되지 않았습니다.")
+        }
+    }
+    //회사 유효성 검사
+    function companyCheck(){
+        let crn=$("#crn").val();
+        let name=$("#name").val();
 
-		    $.ajax({
-		          data:"",
-		          url:"",
-		          success: function(data){
-		          }
-		    });
-	}else{
-		alert("필수 입력 사항이 모두 입력되지 않았습니다.")
-	}
-}
-
-/* 아임포트 API = 결제API */
-function payment(){
-	var IMP = window.IMP;
-	IMP.init("imp35631338"); // [본인]관리자 식별코드 [ 관리자 계정마다 다름]
-    IMP.request_pay({ // 결제 요청변수
-	    pg: "html5_inicis",	// pg사 [ 아임포트 관리자페이지에서 선택한 pg사 ]
-	    pay_method: 'card',	// 결제방식
-	    merchant_uid: "ORD20180131-0000011", // 주문번호[별도]
-	    name: "EZEN SHOP", // 결제창에 나오는 결제이름
-	    amount: totalpay,	// 결제금액
-	    buyer_email: "gildong@gmail.com",
-	    buyer_name: '임시이름',
-	    buyer_tel: '임시번호',
-		  }, function (rsp) { // callback
-		      if (rsp.success) { // 결제 성공했을때 -> 주문 완료 페이지로 이동 []
-		      } else {
-				saveorder(); // 결제 실패 했을때 -> 테스트 할시에는 이부분 활용
-		      }
-	  });
-}
-// 주문 처리 메소드
-function saveorder(){
-	alert("DB처리시작");
-	$.ajax({
-		url : "saveorder",
-		success : function( re ){
-			alert("DB처리 성공")
-		}
-	});
-}
+        $.ajax({
+            url:"/company/check",
+            method:"post",
+            data:{"crn":crn,"name":name},
+            success:function(data){
+                if(data){
+                    if(pass[2]== true && pass[1]== true){
+                       const ran=Math.random();
+                       const random=Math.floor(ran*899999+100000);
+                       $("#cnum").val(random);
+                    }
+                }else{
+                        alert("이미 등록되어있는 회사입니다.");
+                }
+            }
+        });
+    }
