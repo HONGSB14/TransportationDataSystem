@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tds.service.CompanyService;
+import tds.vo.CompanyVo;
 
 
 @RestController
@@ -13,9 +14,10 @@ import tds.service.CompanyService;
 public class CompanyController {
     @Autowired
     private final CompanyService companyService;
+
     //회사 유효성 검사
     @PostMapping("/check")
-    public boolean companyCheck(@RequestParam("crn") int crn, @RequestParam("name") String name){
+    public boolean companyCheck(@RequestParam("crn") String crn, @RequestParam("name") String name){
 
         return companyService.check(crn,name);
 
@@ -25,5 +27,12 @@ public class CompanyController {
     public boolean numberCheck(@RequestParam("cnum") String cnum){
             return companyService.numberCheck(cnum);
     }
+
+    //회사 가입
+    @PostMapping("signup")
+    public boolean signup(CompanyVo companyVo){
+        return companyService.signup(companyVo);
+    }
+
 
 }

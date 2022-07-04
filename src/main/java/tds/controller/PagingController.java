@@ -3,12 +3,12 @@ package tds.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import tds.vo.CompanyVo;
 
 @Controller
 @RequestMapping("/page")
 public class PagingController {
-
-
 
     ////////////////////////////////productInfo paging////////////////////////////////////////////////
     @GetMapping("/productInfo")
@@ -27,7 +27,7 @@ public class PagingController {
         return "com.tds.company/success";
     }
 
-    ////////////////////////////////// //member paging//////////////////////////////////////////////////
+    ////////////////////////////////// //member paging////////////////////////////////////////////////
 
     @GetMapping("/member/login")
     public String memberLogin(){

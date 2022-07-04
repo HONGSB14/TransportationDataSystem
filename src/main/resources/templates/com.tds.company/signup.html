@@ -12,7 +12,7 @@
     <div class="col-md-12 py-5">
         <div class="offset-4 col-md-4">
 
-            <form>
+            <form id="signupForm">
                 <!-- 가격 선택 란 -->
                 <div class="py-3">
                     <div class="col-md-4 text-left">가격선택 (월)<Strong class="must_do">*</Strong></div>
@@ -58,13 +58,18 @@
                 <div class="py-3">
                     <div class="col-md-4 text-left">가입고유번호<Strong class="must_do">*</Strong></div>
                     <div>
-                        <input value="" type="text" name="company_number" id="company_number" class="form-control" readonly="readonly" >
+                        <input value="" type="text" name="companyNumber" id="companyNumber" class="form-control" readonly="readonly">
                     </div>
+                    <span class="checktrue" id="signupcheck"></span>
+                    <span class="checkfalse" id="signupcheck2"></span>
                 </div>
             </form>
             <!-- 등록버튼 -->
-            <div class="offset-4 col-md-4 py-5">
+            <div class="col-md-12 py-3">
                 <button class="form-control" type="button" onclick="requestPay()">결제하기</button>
+            </div>
+            <div class="col-md-12">
+                <a href="/"><button class="form-control" type="button">홈으로</button></a>
             </div>
         </div>
     </div>

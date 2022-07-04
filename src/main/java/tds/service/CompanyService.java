@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tds.mapper.CompanyMapper;
+import tds.vo.CompanyVo;
 
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
-
     @Autowired
     private final CompanyMapper companyMapper;
     //회사 유효성 검사
-    public boolean check(int crn, String name){
+    public boolean check(String crn, String name){
 
         String result= companyMapper.companyCheck(crn,name);
 
@@ -31,5 +31,9 @@ public class CompanyService {
         }else{
             return false;
         }
+    }
+    //회사 가입
+    public boolean signup(CompanyVo companyVo){
+       return companyMapper.signup(companyVo);
     }
 }
