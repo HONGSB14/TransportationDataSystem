@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tds.mapper.CompanyMapper">
+        <select id="companyCheck" resultType="String">
+                SELECT crn,name FROM springproject.company  WHERE crn=#{crn} AND name=#{name}
+        </select>
+
+        <select id="numberCheck" resultType="String">
+                SELECT company_number FROM springproject.company WHERE company_number=#{cnum}
+        </select>
+
+</mapper>

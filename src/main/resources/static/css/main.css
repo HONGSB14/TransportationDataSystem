@@ -8,7 +8,9 @@
 
 a{text-decoration: none; color: black }
 
-.check{color: red};
+.checktrue{color: blue};
+
+.checkfalse{color: red};
 
 #must_do{color: red;}
 

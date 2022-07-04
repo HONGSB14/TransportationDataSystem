@@ -1,14 +1,14 @@
 //회사등록 유효성 검사 조건: 모두 true 라면 가입 성공
-let pass=[false,false,false,false,false];
+let pass=[false,false,false,false];
 
 $(function(){ //문서 시작
 
 	//가격 선택 란
-	$("#selectprice").change(function(){
+	$("#price").change(function(){
 
-		let selectprice=$("#selectprice").val();
+		let price=$("#price").val();
 
-		if(selectprice=="1" || selectprice=="2" || selectprice=="3"){
+		if(price=="1" || price=="2" || price=="3"){
 			$("#pricecheck").html("가격이 선택되었습니다."); pass[0]=true;
 		}else{
 			$("#pricecheck").html("");pass[0]=false;
@@ -35,15 +35,12 @@ $(function(){ //문서 시작
 	//회사명 입력 란
 	$("#name").keyup(function(){
 
-		let name=$("#companyname").val();
+		let name=$("#name").val();
 		let namec=/^[0-9,가-힣,A-Z,a-z]{1,20}$/;
 
 		if(namec.test(name)){
 		 $("#namecheck2").html("");
 		 $("#namecheck").html("가입할 수 있는 회사명 입니다.");	pass[2]=true;
-
-
-
 		}else{
 			$("#namecheck").html("");
 		  $("#namecheck2").html("가입할 수 없는 회사명 입니다.");	pass[2]=false;
@@ -51,70 +48,50 @@ $(function(){ //문서 시작
 
 	});
 
-	//결제은행 입력 란
-	//신한
-	$("#sinhanbank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-	//카카오
-	$("#kakaobank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-
-	});
-	//국민
-	$("#kbbank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-	//농협
-	$("#nhbank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-	//기업
-	$("#ibkbank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-	//하나
-	$("#hanabank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-	//우리
-	$("#wooribank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-	//수협
-	$("#shbank").click(function(){
-		pass[3]=true;
-		$('input[name="bank"]:checked').val();
-	});
-
-
-	//계좌번호 등록
-	$("#account").keyup(function(){
-
-		let account = $("#account").val();
-		let accountc= /^[0-9]{12,12}$/;
-
-		if(accountc.test(account)){
-			$("#accountcheck2").html("");
-			$("#accountcheck").html("사용가능한 계좌번호입니다."); pass[4]=true;
-		}else{
-			$("#accountcheck").html("");
-			$("#accountcheck2").html("사용 할 수 없는 계좌번호입니다."); pass[4]=false;
-		}
-	});
 }); //문서 끝 (유효성 검사)
 
-    function companySignup(){
-        let form=$("")
-        let check = true;
+ //회사 유효성 검사 버튼
+    function companyCheck(){
 
+        $.ajax({
+            url:"/company/check",
+            method:"post",
+            data:{"crn":$("#crn").val(),"name":$("#name").val()},
+            success:function(data){
+                if(data == true){
+                    if(pass[2]== true && pass[1]== true){
+                       const ran=Math.random();
+                       const random=Math.floor(ran*899999+100000);
+                               $.ajax({
+                                    url:"/company/numberCheck",
+                                    method:"post",
+                                    data:{"cnum":String($("#company_number").val())},
+                                    success:function(data){
+                                        if(data==true){
+                                          $("#btncheck").attr("disabled",true);
+                                           $("#numbercheck2").html("");
+                                          $("#numbercheck").html("등록 할 수 있는 회사입니다.");
+                                          $("#company_number").val(random); pass[3]=true;
+                                        }else{
+                                               $("#numbercheck").html("");
+                                               $("#numbercheck2").html("");
+                                              $("#company_number").val(random); pass[3]=false;
+                                        }
+                                     }
+                               });
+                    }
+                }else{
+                        $("#numbercheck").html("");
+                        $("#numbercheck2").html("이미 등록되어있는 회사입니다.");  pass[3]=false;
+                }
+            }
+        });
+    }
+
+    //회사 등록 및 결제 등록
+    function requestPay() {
+
+        let check = true;
         for(let i = 0; i<pass.length; i++){
             if(pass[i] == false){
                 check =false;
@@ -122,29 +99,51 @@ $(function(){ //문서 시작
         }
         if(check){
 
+        let price=$("#price").val();
+        let name=$("#name").val();
+        realPrice="";
+        productInfo="";
+        if(price==1){
+            realPrice=30000;
+            productInfo="기본 표 제공";
+        }else if(price ==2){
+            realPrice=60000;
+             productInfo="기본 표 + 차트 제공";
+        }else if(price==3){
+            realPrice=90000;
+             productInfo="기본 표 + 차트 + 데이터 제공";
+        }else{
+            alert("가격을 선택하여 주십시오.");
+        }
+         var IMP = window.IMP; // 생략 가능
+         IMP.init("imp70174656"); // 예: imp00000000
+             // IMP.request_pay(param, callback) 결제창 호출
+                  IMP.request_pay({ // param
+                      pg: "html5_inicis",
+                      pay_method: "card",
+                      merchant_uid: "ORD20180131-0000011",
+                      name: productInfo,
+                      amount: realPrice,
+                      buyer_email: "",
+                      buyer_name: name,
+                      buyer_tel: "",
+                      buyer_addr: "",
+                      buyer_postcode: ""
+                  }, function (rsp) { // callback
+                      if (rsp.success) {
+                          console.log("결제성공");
+                      } else {
+                        $.ajax({
+                                url:"/company/signup",
+                                method:"POST",
+                                data:"",
+                                success:function(data){
+                                }
+                        });
+                         console.log("결제실패");
+                      }
+                  });
         }else{
             alert("필수 입력 사항이 모두 입력되지 않았습니다.")
         }
-    }
-    //회사 유효성 검사
-    function companyCheck(){
-        let crn=$("#crn").val();
-        let name=$("#name").val();
-
-        $.ajax({
-            url:"/company/check",
-            method:"post",
-            data:{"crn":crn,"name":name},
-            success:function(data){
-                if(data){
-                    if(pass[2]== true && pass[1]== true){
-                       const ran=Math.random();
-                       const random=Math.floor(ran*899999+100000);
-                       $("#cnum").val(random);
-                    }
-                }else{
-                        alert("이미 등록되어있는 회사입니다.");
-                }
-            }
-        });
-    }
+   }
