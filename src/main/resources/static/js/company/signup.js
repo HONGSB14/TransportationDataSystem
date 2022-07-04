@@ -130,9 +130,9 @@ $(function(){ //문서 시작
                       buyer_addr: "",
                       buyer_postcode: ""
                   }, function (rsp) { // callback
-                      if (rsp.success) {
+                      if (rsp.success) { //결제 성공 시
                           console.log("결제성공");
-                      } else {
+                      } else {  //결제 실패 시 ( 결제가 실제로 이루어지지 않기때문에 이쪽에 데이터전송)
                         $.ajax({
                                 url:"/company/signup",
                                 method:"POST",
@@ -140,7 +140,7 @@ $(function(){ //문서 시작
                                 success:function(data){
                                 }
                         });
-                         console.log("결제실패");
+
                       }
                   });
         }else{
