@@ -15,7 +15,7 @@ $(function(){
              priceInfo="( 월 ) 90,000 원 (매출 표 + 매출 차트 제공 + 데이터 제공)";
        };
           html += '<div class="text-center py-4">'+
-                               '<h3>Thank You!! '+company.name+' </h3>'+
+                               '<h3>Thank You!! '+company.companyName+' </h3>'+
                          '</div>'+
                          '<div class="py-3">'+
                               '<h1>결제를 성공적으로 마쳤습니다.</h1>'+
@@ -25,7 +25,7 @@ $(function(){
                                      '<h2> 회사 가입 정보 </h2>'+
                                  '</div>'+
                                  '<div class="py-5">'+
-                                     '회사명 : '+company.name+
+                                     '회사명 : '+company.companyName+
                                      '<br><br>'+
                                      '가입 등록 번호 :'+company.companyNumber+
                                      '<br><br>'+

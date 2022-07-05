@@ -33,12 +33,12 @@ $(function(){ //문서 시작
 	});
 
 	//회사명 입력 란
-	$("#name").keyup(function(){
+	$("#companyName").keyup(function(){
 
-		let name=$("#name").val();
-		let namec=/^[0-9,가-힣,A-Z,a-z]{1,20}$/;
+		let companyName=$("#companyName").val();
+		let companyNameCheck=/^[0-9,가-힣,A-Z,a-z]{1,20}$/;
 
-		if(namec.test(name)){
+		if(companyNameCheck.test(companyName)){
 		 $("#namecheck2").html("");
 		 $("#namecheck").html("가입할 수 있는 회사명 입니다.");	pass[2]=true;
 		}else{
@@ -56,7 +56,7 @@ $(function(){ //문서 시작
         $.ajax({
             url:"/company/check",
             method:"post",
-            data:{"crn":String( $("#crn").val() ),"name":$("#name").val()},
+            data:{"crn":String( $("#crn").val() ),"companyName":$("#companyName").val()},
             success:function(data){
                 if(data == true){
                     if(pass[2]== true && pass[1]== true){
@@ -105,7 +105,7 @@ $(function(){ //문서 시작
         }
         if(check){
         let price=$("#price").val();
-        let name=$("#name").val();
+        let companyName=$("#companyName").val();
         realPrice="";
         productInfo="";
         if(price==1){
@@ -130,7 +130,7 @@ $(function(){ //문서 시작
                       name: productInfo,
                       amount: realPrice,
                       buyer_email: "",
-                      buyer_name: name,
+                      buyer_name: companyName,
                       buyer_tel: "",
                       buyer_addr: "",
                       buyer_postcode: ""
@@ -145,8 +145,6 @@ $(function(){ //문서 시작
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                  console.log(companyNumber);
-                                  console.log(data);
                                     if(data==true){
                                          location.href="/page/company/success/"+companyNumber;
                                          $("#signupcheck2").html("");

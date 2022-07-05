@@ -15,11 +15,11 @@ public class CompanyService {
     @Autowired
     private final CompanyMapper companyMapper;
     //회사 유효성 검사
-    public boolean check(String crn, String name){
+    public boolean check(String crn, String companyName){
 
-        String result= companyMapper.companyCheck(crn,name);
+        String result= companyMapper.companyCheck(crn,companyName);
 
-        if(result == null){ //만약 검색이 된다면 실패
+        if(result == null){ //만약 검색값이 없다면
             return true;
         }else{
             return false;
@@ -46,14 +46,13 @@ public class CompanyService {
         JSONObject jo=new JSONObject();
         jo.put("companyNumber",mapList.get("company_number"));
         jo.put("price",mapList.get("price"));
-        jo.put("name",mapList.get("name"));
+        jo.put("companyName",mapList.get("company_name"));
         jo.put("crn",mapList.get("crn"));
         return jo;
     }
 
     //회사 고유 번호 가져오기
-    public String findNumber(String crn,String name){
-        System.out.println(name);
-        return companyMapper.findNumber(crn,name);
+    public String findNumber(String crn,String companyName){
+        return companyMapper.findNumber(crn,companyName);
     }
 }

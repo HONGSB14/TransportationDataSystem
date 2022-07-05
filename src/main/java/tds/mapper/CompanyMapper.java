@@ -7,7 +7,7 @@ import java.util.Map;
 @Mapper
 public interface CompanyMapper {
 
-  String companyCheck(String crn, String name);
+  String companyCheck(String crn, String companyName);
 
   String numberCheck(int cnum);
 
@@ -15,5 +15,5 @@ public interface CompanyMapper {
 
   Map<String,Object>info(int companyNumber);
 
-  String findNumber(String crn, String name);
+  String findNumber(String crn, String companyName);
 }

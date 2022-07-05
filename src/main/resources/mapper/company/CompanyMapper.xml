@@ -5,7 +5,7 @@
 
 <mapper namespace="tds.mapper.CompanyMapper">
         <select id="companyCheck" resultType="String">
-                SELECT crn,name FROM springproject.company  WHERE crn=#{crn} AND name=#{name}
+                SELECT crn,company_name FROM springproject.company  WHERE crn=#{crn} AND company_name=#{companyName}
         </select>
 
         <select id="numberCheck" resultType="String">
@@ -13,15 +13,15 @@
         </select>
 
         <select id="info" parameterType="Integer" resultType="Map">
-                SELECT company_number,crn,price,name FROM springproject.company WHERE company_number=#{companyNumber}
+                SELECT company_number,crn,price,company_name FROM springproject.company WHERE company_number=#{companyNumber}
         </select>
 
         <select id="findNumber" resultType="String">
-                SELECT company_number FROM springproject.company WHERE crn=#{crn} AND name=#{name}
+                SELECT company_number FROM springproject.company WHERE crn=#{crn} AND company_name=#{companyName}
         </select>
 
         <insert id="signup">
-                INSERT INTO springproject.company(company_number,crn,price,name) VALUES(#{companyNumber},#{crn},#{price},#{name})
+                INSERT INTO springproject.company(company_number,crn,price,company_name) VALUES(#{companyNumber},#{crn},#{price},#{companyName})
         </insert>
 
 

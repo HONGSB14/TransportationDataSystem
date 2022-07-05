@@ -10,9 +10,9 @@ public class MemberService {
     private MemberMapper memberMapper;
 
     //아이디 유효성 검사
-    public boolean idCheck(String id){
-        String memberId=memberMapper.idCheck(id);
-        if(memberId==null){
+    public boolean idCheck(String memberId){
+        String id=memberMapper.idCheck(memberId);
+        if(id==null){
             return true;
         }else{
             return false;

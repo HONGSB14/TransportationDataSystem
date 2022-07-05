@@ -19,9 +19,9 @@ public class CompanyController {
 
     //회사 유효성 검사
     @PostMapping("/check")
-    public boolean companyCheck(@RequestParam("crn") String crn, @RequestParam("name") String name){
+    public boolean companyCheck(@RequestParam("crn") String crn, @RequestParam("companyName") String companyName){
 
-        return companyService.check(crn,name);
+        return companyService.check(crn,companyName);
 
     }
     //회사 고유번호 체크
@@ -32,8 +32,8 @@ public class CompanyController {
 
     //회사 고유 번호 리턴
     @PostMapping("/findNumber")
-    public int number(@RequestParam("crn")String crn,@RequestParam("name") String name){
-        int number=Integer.parseInt(companyService.findNumber(crn,name));
+    public int number(@RequestParam("crn")String crn,@RequestParam("companyName") String companyName){
+        int number=Integer.parseInt(companyService.findNumber(crn,companyName));
         return number;
     }
 

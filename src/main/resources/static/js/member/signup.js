@@ -3,24 +3,22 @@ let pass=[false,false,false,false,false,false];
 
 $(function(){ //문서시작 시 함수시작
 	//회사 유효성 검사
-  	$("#name").keyup(function(){
+  	$("#companyName").keyup(function(){
 
 		let crn=$("#crn").val();
-		let name=$("#name").val();
+		let companyName=$("#companyName").val();
 		$.ajax({
 			url:"/company/check",
-			data:{"crn":crn,"name":name},
+			data:{"crn":crn,"companyName":companyName},
 			method:"POST",
 			success: function(result){
-			console.log(result);
 				if(result==false){
 					$("#cnamecheck2").html("");
 					$("#cnamecheck").html("승인된 회사입니다.");		pass[0] = true;
 					$("#companyNumber").val(function(){
-
 						$.ajax({
 							url:"/company/findNumber",
-							data:{"crn":crn,"name":name},
+							data:{"crn":crn,"companyName":companyName},
 							method:"POST",
 							success:function(result){
 								if(result!=null){
@@ -37,13 +35,13 @@ $(function(){ //문서시작 시 함수시작
 		});
 	});
     //아이디 중복체크
-    $("#id").keyup(function(){
-        let id=$("#id").val()
-        let idc=/^[a-zA-Z0-9]{4,15}$/;
-        if(idc.test(id)){
+    $("#memberId").keyup(function(){
+        let memberId=$("#memberId").val()
+        let memberIdCheck=/^[a-zA-Z0-9]{4,15}$/;
+        if(memberIdCheck.test(memberId)){
           $.ajax({
 				url: "/member/idCheck",
-				data: {"id":id},
+				data: {"memberId":memberId},
 				method: "GET",
 				success: function(result){
 					if(result==true){
@@ -59,7 +57,6 @@ $(function(){ //문서시작 시 함수시작
            $("#idcheck").html("");
            $("#idcheck2").html("영문,숫자 포함 4~15길이로 입력해주세요.");	pass[1] = false;
         }
-
     });
 
         //비밀번호 중복체크
@@ -101,16 +98,16 @@ $(function(){ //문서시작 시 함수시작
         });
 
    		//이름 체크
-        $("#mname").keyup(function(){
+        $("#memberName").keyup(function(){
 
-            let name=$("#mname").val();
+            let memberName=$("#memberName").val();
 
-            let namec=/^[가-힣]{2,5}$/;
+            let memberNameCheck=/^[가-힣]{2,5}$/;
 
 
-            if(namec.test(name)){
+            if(memberNameCheck.test(memberName)){
                 $("#namecheck2").html("");
-                $("#namecheck").html("환영합니다. ' "+name+" '　님");	pass[3] = true;
+                $("#namecheck").html("환영합니다. ' "+memberName+" '　님");	pass[3] = true;
             }else{
                 $("#namecheck").html("");
                 $("#namecheck2").html("사용할 수 없는 이름입니다.");	pass[3] =false;
@@ -132,7 +129,22 @@ $(function(){ //문서시작 시 함수시작
                 $("#phonecheck2").html("사용할 수 없는 전화번호 이거나 올바르지 않은 형식입니다.");  pass[4] = false;
             }
          });
-         let email=$("#email").val();
+
+         //이메일아이디 저장 변수
+         let email="";
+         let emailFinal="";
+
+         //이메일 유효성 검사
+         function validation(email){
+           let emailc=/^[a-zA-Z0-9]{3,20}$/;
+             if(emailc.test(email)){
+                  $("#emailcheck2").html("");
+                  $("#emailcheck").html("");
+             }else{
+                  $("#emailcheck").html("");
+                  $("#emailcheck2").html("올바른 이메일 기입방식으로 입력하여주세요.");pass[5] = false;
+              }
+         }
          //이메일 체크
          $("#email").keyup(function(){
           email=$("#email").val();
@@ -141,7 +153,7 @@ $(function(){ //문서시작 시 함수시작
 
         //이메일 선택상자 체크
         $("#selectEmail").change(function(){
-		   email=$("#email").val();
+		    email=$("#email").val();
 		    validation(email);
             let selectEmail = $("#selectEmail").val();
             let emailAddress=$("#emailAddress").val();
@@ -166,10 +178,11 @@ $(function(){ //문서시작 시 함수시작
                 $("#emailAddress").attr("readonly",false);
 
                 $("#emailAddress").keyup(function() {
-                  let email=$("#email").val();
+                  email=$("#email").val();
                   validation(email);
                   let  emailAddress=$("#emailAddress").val();
                   let emailFinal=email+"@"+emailAddress;
+                 //직접 입력 할 시에 대한 유효성 검사
                 $.ajax({
                      url:"/member/emailCheck",
                      method:"GET",
@@ -182,7 +195,6 @@ $(function(){ //문서시작 시 함수시작
                                   let emailc = /^([a-z0-9]{4,10}).([a-z]{3,3})$/;
                                   let emailc2 = /^([a-z0-9]{4,10}).([a-z]{2,2}).([a-z]{2,2})$/;
                                   if( emailc.test(emailAddress) || emailc2.test(emailAddress) ){
-                                          console.log(emailAddress);
                                           $("#emailcheck2").html("");
                                           $("#emailcheck").html("사용가능한 이메일주소입니다."); pass[5] = true;
                                   }else{
@@ -210,16 +222,41 @@ $(function(){ //문서시작 시 함수시작
                 }
         });
 }); //문서종료 시 함수종료
-//유효성 검사
-function validation(email){
 
-  let emailc=/^[a-zA-Z0-9]{3,20}$/;
-    if(emailc.test(email)){
-         $("#emailcheck2").html("");
-         $("#emailcheck").html("");
-    }else{
-         $("#emailcheck").html("");
-         $("#emailcheck2").html("올바른 이메일 기입방식으로 입력하여주세요.");pass[5] = false;
-     }
+//회원 가입
+function signup(){
+	let check = true;
+
+	for(let i = 0; i<pass.length; i++){
+		if(pass[i] == false){
+			check =false;
+		}
+	}
+	if(check){
+	    let email=$("#email").val();
+	    let emailAddress = $("#emailAddress").val();
+	    let emailFinal= email+"@"+emailAddress;
+	    let memberInfo= {
+	        companyNumber:$("#companyNumber").val(),
+            memberNumber:0,
+            memberId:$("#memberId").val(),
+            password:$("#password").val(),
+            memberName:$("#memberName").val(),
+            phone:$("#phone").val(),
+            email: emailFinal
+	    };
+	    console.log(memberInfo);
+		$.ajax({
+		    url:"/member/signup",
+		    data:{"memberInfo":memberInfo},
+		    method:"POST",
+		    contentType:false,
+		    dataType:false,
+		    success:function(data){
+		        console.log(data);
+		    }
+		});
+	}else{
+		alert("필수 입력 사항이 모두 입력되지 않았습니다.")
+	}
 }
-

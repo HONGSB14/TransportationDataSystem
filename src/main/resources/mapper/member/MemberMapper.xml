@@ -5,7 +5,7 @@
 <mapper namespace="tds.mapper.MemberMapper">
 
     <select id="idCheck" resultType="String">
-            SELECT id FROM springproject.member WHERE id=#{id};
+            SELECT member_id FROM springproject.member WHERE member_id=#{memberId};
     </select>
     <select id="emailCheck" resultType="String">
         SELECT email FROM springproject.member WHERE email=#{email}

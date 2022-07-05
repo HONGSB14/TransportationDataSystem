@@ -11,8 +11,7 @@
         <div id="signup" class="offset-3 col-md-7 py-4">
             <!-- 틀 -->
             <div class="offset-2 col-md-7">
-                <form  id="signupform">
-
+                <form  id="signupForm">
                     <!-- 사업자 번호 입력 란 -->
                     <div class="py-1">
                         <div class="col-md-4 text-left">사업자 등록 번호<Strong class="must_do">*</Strong></div>
@@ -26,7 +25,7 @@
                     <!-- 회사이름 입력 란 -->
                     <div class="py-1">
                         <div class="col-md-4 text-left">회사 명<Strong class="must_do">*</Strong></div>
-                        <input class="form-control" type="text" id="name" name="name" placeholder="회사 명을 입력해 주세요.">
+                        <input class="form-control" type="text" id="companyName" name="companyName" placeholder="회사 명을 입력해 주세요.">
                         <div class="py-1">
                             <span class="checktrue" id="cnamecheck"></span>
                             <span class="checkfalse" id="cnamecheck2"></span>
@@ -42,7 +41,7 @@
                     <!--  아이디 입력 란 -->
                     <div class="py-1">
                         <div class="col-md-4 text-left">아이디<Strong class="must_do">*</Strong></div>
-                        <input class="form-control" type="text" id="id" name="id" placeholder="아이디를 입력해 주세요.(4~15자리 까지 가능합니다.)">
+                        <input class="form-control" type="text" id="memberId" name="memberId" placeholder="아이디를 입력해 주세요.(4~15자리 까지 가능합니다.)">
                         <div class="py-1">
                             <span class="checktrue" id="idcheck"></span>
                             <span class="checkfalse" id="idcheck2"></span>
@@ -72,7 +71,7 @@
                     <!--  이름 입력 란 -->
                     <div class="py-1">
                         <div class="col-md-4 my-left">이름<Strong class="must_do">*</Strong></div>
-                        <input class="form-control" type="text" id="mname" name="mname" placeholder="이름을 입력해주세요.">
+                        <input class="form-control" type="text" id="memberName" name="memberName" placeholder="이름을 입력해주세요.">
                         <div class="py-1">
                             <span class="checktrue" id="namecheck"></span>
                             <span class="checkfalse" id="namecheck2"></span>
@@ -139,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <button  class="form-control py-3" onclick="signup()" type="button">가입하기</button>
+                    <button type="button" class="form-control py-3" onclick="signup()" >가입하기</button>
                 </form>
 
                 <!-- 취소하기 버튼 -->
