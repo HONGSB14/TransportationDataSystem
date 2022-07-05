@@ -12,8 +12,13 @@
                 SELECT company_number FROM springproject.company WHERE company_number=#{cnum}
         </select>
 
+        <select id="info" parameterType="Integer" resultType="Map">
+                SELECT company_number,crn,price,name FROM springproject.company WHERE company_number=#{companyNumber}
+        </select>
+
         <insert id="signup">
                 INSERT INTO springproject.company(company_number,crn,price,name) VALUES(#{companyNumber},#{crn},#{price},#{name})
         </insert>
+
 
 </mapper>

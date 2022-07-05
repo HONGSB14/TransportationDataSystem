@@ -1,6 +1,6 @@
 //회사등록 유효성 검사 조건: 모두 true 라면 가입 성공
 let pass=[false,false,false,false];
-let companyNumber="";
+let companyNumber=1;
 $(function(){ //문서 시작
 
 	//가격 선택 란
@@ -56,26 +56,29 @@ $(function(){ //문서 시작
         $.ajax({
             url:"/company/check",
             method:"post",
-            data:{"crn":$("#crn").val(),"name":$("#name").val()},
+            data:{"crn":String( $("#crn").val() ),"name":$("#name").val()},
             success:function(data){
                 if(data == true){
                     if(pass[2]== true && pass[1]== true){
                        const ran=Math.random();
                        const random=Math.floor(ran*899999+100000);
+                       companyNumber=random;
+                       $("#companyNumber").val(random); pass[3]=true;
                                $.ajax({
                                     url:"/company/numberCheck",
                                     method:"post",
-                                    data:{"cnum":String( $("#companyNumber").val() )},
+                                    data:{"cnum": $("#companyNumber").val() },
                                     success:function(data){
                                         if(data==true){
                                           $("#btncheck").attr("disabled",true);
                                           $("#numbercheck2").html("");
                                           $("#numbercheck").html("등록 할 수 있는 회사입니다.");
-                                          companyNumber=$("#companyNumber").val(random); pass[3]=true;
                                         }else{
-                                           $("#numbercheck").html("등록 할 수 없는 회사입니다.");
+                                           $("#numbercheck").html("등록 할 수 있는 회사입니다.");
                                            $("#numbercheck2").html("");
-                                           $("#companyNumber").val(random); pass[3]=false;
+                                           companyNumber=random;
+                                           $("#companyNumber").val(random); pass[3]=true;
+
                                         }
                                      }
                                });
@@ -142,11 +145,13 @@ $(function(){ //문서 시작
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
+                                  console.log(companyNumber);
+                                  console.log(data);
                                     if(data==true){
-                                        location.href="/page/company/success";
+                                         location.href="/page/company/success/"+companyNumber;
                                          $("#signupcheck2").html("");
                                     }else{
-                                        $("#signupcheck2").html("알수없는 이유로 결제가 실패되었습니다.다시한번 시도하여주십시오. 반복적으로 결제 실패할 경우 관리자에게 문의해 주십시오.");
+                                        $("#signupcheck2").html("알수없는 이유로 결제가 실패되었습니다.다시한번 시도하여주십시오. 반복적으로 결제 실패할 경우  관리자에게 문의해 주십시오.");
                                     }
                                 }
                         });
