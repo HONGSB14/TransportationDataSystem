@@ -16,9 +16,14 @@
                 SELECT company_number,crn,price,name FROM springproject.company WHERE company_number=#{companyNumber}
         </select>
 
+        <select id="findNumber" resultType="String">
+                SELECT company_number FROM springproject.company WHERE crn=#{crn} AND name=#{name}
+        </select>
+
         <insert id="signup">
                 INSERT INTO springproject.company(company_number,crn,price,name) VALUES(#{companyNumber},#{crn},#{price},#{name})
         </insert>
+
 
 
 </mapper>

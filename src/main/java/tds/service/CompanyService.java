@@ -50,4 +50,10 @@ public class CompanyService {
         jo.put("crn",mapList.get("crn"));
         return jo;
     }
+
+    //회사 고유 번호 가져오기
+    public String findNumber(String crn,String name){
+        System.out.println(name);
+        return companyMapper.findNumber(crn,name);
+    }
 }

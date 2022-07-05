@@ -2,66 +2,51 @@
 let pass=[false,false,false,false,false,false];
 
 $(function(){ //문서시작 시 함수시작
-
 	//회사 유효성 검사
-  	$("#cname").keyup(function(){
+  	$("#name").keyup(function(){
 
 		let crn=$("#crn").val();
-		let cname=$("#cname").val();
-
+		let name=$("#name").val();
 		$.ajax({
-
-			url:"../validation/CompanyCheck",
-			data:{"crn":crn,"cname":cname},
+			url:"/company/check",
+			data:{"crn":crn,"name":name},
+			method:"POST",
 			success: function(result){
-				if(result==1){
+			console.log(result);
+				if(result==false){
 					$("#cnamecheck2").html("");
 					$("#cnamecheck").html("승인된 회사입니다.");		pass[0] = true;
-					$("#cnum").val(function(){
-
-						let crn=$("#crn").val();
-						let cname=$("#cname").val();
+					$("#companyNumber").val(function(){
 
 						$.ajax({
-
-							url:"../company/FindCnum",
-							data:{"crn":crn,"cname":cname},
+							url:"/company/findNumber",
+							data:{"crn":crn,"name":name},
+							method:"POST",
 							success:function(result){
-
 								if(result!=null){
-									$("#cnum").val(result);
-								}else{
-
+									$("#companyNumber").val(result);
 								}
 							}
 						});
-					});
-
+				});
 				}else{
 					$("#cnamecheck").html("");
-					$("#cnamecheck2").html("가입이 승인되지 않은 회사입니다.");  pass[0] = false;
+					$("#cnamecheck2").html("가입할 수 없는 회사입니다.");  pass[0] = false;
 				}
 			}
 		});
 	});
-
-
-
-
-
     //아이디 중복체크
-    $("#mid").keyup(function(){
-
-        let mid= $("#mid").val();
+    $("#id").keyup(function(){
+        let id=$("#id").val()
         let idc=/^[a-zA-Z0-9]{4,15}$/;
-
-        if(idc.test(mid)){
-
+        if(idc.test(id)){
           $.ajax({
-				url: "../validation/Idcheck",
-				data: {"mid":mid},
+				url: "/member/idCheck",
+				data: {"id":id},
+				method: "GET",
 				success: function(result){
-					if(result==1){
+					if(result==true){
 						$("#idcheck2").html("");
            				$("#idcheck").html("사용가능한 아이디 입니다.");  pass[1] = true;
 					}else{
@@ -78,12 +63,12 @@ $(function(){ //문서시작 시 함수시작
     });
 
         //비밀번호 중복체크
-        $("#mpwd").keyup(function(){
+        $("#password").keyup(function(){
 
-            let pwd=$("#mpwd").val();
-            let pwdc=/^[a-zA-Z0-9]{5,15}$/;
+            let password=$("#password").val();
+            let passwordc=/^[a-zA-Z0-9]{5,15}$/;
 
-            if(pwdc.test(pwd)){ //비밀번호 형식이 알맞을 경우
+            if(passwordc.test(password)){ //비밀번호 형식이 알맞을 경우
                     $("#pwdcheck3").html("");
             		$("#pwdcheck4").html("");
                     $("#pwdcheck2").html("");
@@ -96,14 +81,13 @@ $(function(){ //문서시작 시 함수시작
             }
         });
 
-
         //비밀번호 재확인 중복체크
-        $("#mpwdcheck").keyup(function(){
+        $("#passwordCheck").keyup(function(){
 
-            let pwd=$("#mpwd").val();
-            let pwdcheck=$("#mpwdcheck").val();
+            let password=$("#password").val();
+            let passwordCheck=$("#passwordCheck").val();
 
-            if(pwd==pwdcheck){
+            if(password==passwordCheck){
                 $("#pwdcheck").html("");  pass[2] = true;
 	  			$("#pwdcheck2").html("");
                 $("#pwdcheck4").html("");
@@ -114,8 +98,8 @@ $(function(){ //문서시작 시 함수시작
                 $("#pwdcheck3").html("");
                 $("#pwdcheck4").html("비밀번호가 일치하지 않습니다."); pass[2] = false;
             }
-
         });
+
    		//이름 체크
         $("#mname").keyup(function(){
 
@@ -134,9 +118,9 @@ $(function(){ //문서시작 시 함수시작
         });
 
         //전화번호 중복 체크
-         $("#mphone").keyup(function(){
+         $("#phone").keyup(function(){
 
-            let phone=$("#mphone").val();
+            let phone=$("#phone").val();
 
             let phonec=/^([010]{3,3})([0-9]{8,8})$/;
 
@@ -148,94 +132,94 @@ $(function(){ //문서시작 시 함수시작
                 $("#phonecheck2").html("사용할 수 없는 전화번호 이거나 올바르지 않은 형식입니다.");  pass[4] = false;
             }
          });
-
+         let email=$("#email").val();
          //이메일 체크
-         $("#memail").keyup(function(){
-
-            let email=$("#memail").val();
-            let emailaddress= $("#memailaddress").val();
-
-           	if(emailaddress==""){
-				$("#emailcheck2").html("사용 할 수 없는 이메일 주소입니다.");	pass[5] = false;
-			}else{
-				let emailc=/^[a-zA-Z0-9]{3,20}$/;
-
-				 if(emailc.test(email)){
-
-               	 	let emailfinal= email+"@"+emailaddress;
-
-               	 	$.ajax({
-						url:"../validation/EmailCheck",
-						data:{"emailfinal":emailfinal},
-						success: function(result){
-							if(result==1){
-								$("#emailcheck2").html("");
-                				$("#emailcheck").html("사용가능한 이메일주소입니다.");	 pass[5] = true;
-							}else{
-								$("#emailcheck").html("");
-                				$("#emailcheck2").html("동일한 이메일주소가 존재합니다.");	pass[5] = false;
-							}
-						}
-
-					});
-
-          		 }else{
-                	$("#emailcheck").html("");
-                	$("#emailcheck2").html("올바른 이메일 기입방식으로 입력하여주세요.");pass[5] = false;
-           		 }
-			}
+         $("#email").keyup(function(){
+          email=$("#email").val();
+          validation(email);
         });
 
         //이메일 선택상자 체크
-        $("#selectemail").change(function(){
+        $("#selectEmail").change(function(){
+		   email=$("#email").val();
+		    validation(email);
+            let selectEmail = $("#selectEmail").val();
+            let emailAddress=$("#emailAddress").val();
+            let emailFinal=email+"@"+selectEmail;
+            $.ajax({
+            		url:"/member/emailCheck",
+            		method:"GET",
+            		data:{"emailFinal":emailFinal},
+            		success: function(result){
+            		if(result==false){
+                         $("#emailcheck").html("");
+                         $("#emailcheck2").html("동일한 이메일주소가 존재합니다.");	pass[5] = false;
+                    }
+            	}
+            });
+			   if(selectEmail=="직접입력"){ //만약 "직접입력" 을 선택했다면
 
-			let email=$("#memail").val();
-            let selectemail = $("#selectemail").val();
-
-
-
-			   if(selectemail=="직접입력"){ //만약 "직접입력" 을 선택했다면
 				$("#first").attr('disabled',true);
 				$("#emailcheck").html("");
                 $("#emailcheck2").html("이메일을 입력해 주세요.");	pass[5] = false;
-                $("#memailaddress").val("");
-                $("#memailaddress").attr("readonly" ,false);
+                $("#emailAddress").val("");
+                $("#emailAddress").attr("readonly",false);
 
-
-                $("#memailaddress").keyup(function(){
-
-                    let  memail= $("#memailaddress").val();
-
-                    let emailc = /^([a-z0-9]{4,10}).([a-z]{3,3})$/;
-                    let emailc2 = /^([a-z0-9]{4,10}).([a-z]{2,2}).([a-z]{2,2})$/;
-
-                    if(emailc.test(memail) || emailc2.test(memail)){
-
-                        $("#emailcheck2").html("");
-                        $("#emailcheck").html("사용가능한 이메일주소입니다."); pass[5] = true;
-                    }else{
-
-                        $("#emailcheck").html("");
-                        $("#emailcheck2").html("사용할 수 없는 이메일 주소입니다.");	pass[5] = false;
-                    }
-
-                });
-
+                $("#emailAddress").keyup(function() {
+                  let email=$("#email").val();
+                  validation(email);
+                  let  emailAddress=$("#emailAddress").val();
+                  let emailFinal=email+"@"+emailAddress;
+                $.ajax({
+                     url:"/member/emailCheck",
+                     method:"GET",
+                     data:{"emailFinal":emailFinal},
+                      success: function(result){
+                          if(result==true){
+                               if(emailAddress==""){
+                                 $("#emailcheck2").html("사용 할 수 없는 이메일 주소입니다.");	pass[5] = false;
+                               }else{
+                                  let emailc = /^([a-z0-9]{4,10}).([a-z]{3,3})$/;
+                                  let emailc2 = /^([a-z0-9]{4,10}).([a-z]{2,2}).([a-z]{2,2})$/;
+                                  if( emailc.test(emailAddress) || emailc2.test(emailAddress) ){
+                                          console.log(emailAddress);
+                                          $("#emailcheck2").html("");
+                                          $("#emailcheck").html("사용가능한 이메일주소입니다."); pass[5] = true;
+                                  }else{
+                                          $("#emailcheck").html("");
+                                          $("#emailcheck2").html("사용할 수 없는 이메일 주소입니다.");	pass[5] = false;
+                                  }
+                               }
+                          }else{
+                                 $("#emailcheck").html("");
+                                 $("#emailcheck2").html("동일한 이메일주소가 존재합니다.");	pass[5] = false;
+                          }
+                      }
+                 });
+             });
             }else{ //"직접입력" 을 선택 안했다면
                 $("#first").attr('disabled',true);
-                $("#memailaddress").attr("readonly" ,true);
-			    $("#memailaddress").val(selectemail);
+                $("#emailAddress").attr("readonly" ,true);
+			    $("#emailAddress").val(selectEmail);
             	$("#emailcheck2").html("");
                 $("#emailcheck").html("사용가능한 이메일주소입니다.");	pass[5] = true;
             }
-
-			if(email==""){	//만약 이메일 공백이라면
-
-			$("#emailcheck").html("");
-            $("#emailcheck2").html("이메일을 입력해 주세요.");	pass[5] = false;
-
-			}
-
+                if(email==""){	//만약 이메일 공백이라면
+                $("#emailcheck").html("");
+                $("#emailcheck2").html("이메일을 입력해 주세요.");	pass[5] = false;
+                }
         });
-
 }); //문서종료 시 함수종료
+//유효성 검사
+function validation(email){
+
+  let emailc=/^[a-zA-Z0-9]{3,20}$/;
+    if(emailc.test(email)){
+         $("#emailcheck2").html("");
+         $("#emailcheck").html("");
+    }else{
+         $("#emailcheck").html("");
+         $("#emailcheck2").html("올바른 이메일 기입방식으로 입력하여주세요.");pass[5] = false;
+     }
+}
+

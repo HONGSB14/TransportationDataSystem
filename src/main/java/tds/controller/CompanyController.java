@@ -30,13 +30,20 @@ public class CompanyController {
         return companyService.numberCheck(cnum);
     }
 
+    //회사 고유 번호 리턴
+    @PostMapping("/findNumber")
+    public int number(@RequestParam("crn")String crn,@RequestParam("name") String name){
+        int number=Integer.parseInt(companyService.findNumber(crn,name));
+        return number;
+    }
+
      //회사 가입
     @PostMapping("/signup")
     public boolean signup(CompanyVo companyVo){
         return companyService.signup(companyVo);
     }
 
-    //회사 정보
+    //회사 정보 가져오기
     @PostMapping("/info")
     public void info(HttpServletRequest request, HttpServletResponse response){
         int companyNumber=(Integer)request.getSession().getAttribute("companyNumber");

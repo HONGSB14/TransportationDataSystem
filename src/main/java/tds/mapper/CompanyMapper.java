@@ -14,4 +14,6 @@ public interface CompanyMapper {
   boolean signup(CompanyVo companyVo);
 
   Map<String,Object>info(int companyNumber);
+
+  String findNumber(String crn, String name);
 }
