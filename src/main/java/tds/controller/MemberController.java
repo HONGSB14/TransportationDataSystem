@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import tds.service.MemberService;
 import tds.vo.MemberVo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,4 +33,8 @@ public class MemberController {
         return memberService.signup( memberInfo );
     }
 
+    @PostMapping("/loginSession")
+    public void loginSession(@RequestParam("companyNumber") int companyNumber, HttpServletRequest request){
+     request.getSession().setAttribute("companyNumber",companyNumber);
+    }
 }

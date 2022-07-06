@@ -13,6 +13,10 @@
     </select>
 
     <insert id="signup">
-            INSERT INTO springproject.member VALUES  (#{companyNumber},#{memberNumber},#{memberId},#{password},#{memberName},#{phone},#{email})
+            INSERT INTO springproject.member VALUES  (#{companyNumber},#{memberNumber},#{memberId},#{password},#{memberName},#{phone},#{email},#{role})
     </insert>
+
+    <select id="login" resultType="tds.vo.MemberVo">
+        SELECT company_number,member_number,member_id,password,member_name,phone,email,role FROM springproject.member WHERE member_id=#{memberId} AND company_number=#{companyNumber}
+    </select>
 </mapper>

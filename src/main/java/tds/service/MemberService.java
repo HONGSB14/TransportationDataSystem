@@ -2,15 +2,52 @@ package tds.service;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tds.dto.LoginDto;
+import tds.dto.MemberDto;
 import tds.mapper.MemberMapper;
 import tds.vo.MemberVo;
+import tds.vo.Role;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
+import java.util.Map;
 
 
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService {
+
+
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private HttpServletRequest request;
+    //재정의 가 된 UserDetail
+    @Override
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+
+        int companyNumber=(Integer)request.getSession().getAttribute("companyNumber");
+        System.out.println(companyNumber);
+        MemberVo memberVo= memberMapper.login(memberId,companyNumber);
+        System.out.println(memberVo.toString());
+
+        return LoginDto.builder()
+                .memberId(memberVo.getMemberId())
+                .password(memberVo.getPassword())
+                .memberName(memberVo.getMemberName())
+                .companyNumber(memberVo.getCompanyNumber())
+                .authorities(Collections.singleton( new SimpleGrantedAuthority(memberVo.getRole().getKey())))
+                .build();
+
+    }
 
     //아이디 유효성 검사
     public boolean idCheck(String memberId){
@@ -32,18 +69,29 @@ public class MemberService {
     }
     //회원 가입
     public boolean signup(String memberInfo){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         // controller 에서 받아온 String 값을 json 으로 형 변환
         JSONObject jo = new JSONObject(  memberInfo  );
-        //Vo 에 담기
-        MemberVo memberVo =  new MemberVo(
+        //Dto 에 담기
+        MemberDto memberDto =  new MemberDto(
                 Integer.parseInt( String.valueOf( jo.get("companyNumber") ) ),
                 Integer.parseInt(String.valueOf( jo.get("memberNumber") )),
                 (String) (jo.get("memberId")),
-                (String) (jo.get("password")),
+                 encoder.encode((String) (jo.get("password"))) ,    //암호화
                 (String) (jo.get("memberName")),
                 (String) (jo.get("phone")),
                 (String) (jo.get("email"))
                 );
+        //Dto--> VO 이동
+        MemberVo memberVo = new MemberVo(
+                memberDto.getCompanyNumber()
+                ,memberDto.getMemberNumber()
+                ,memberDto.getMemberId()
+                ,memberDto.getPassword()
+                ,memberDto.getMemberName()
+                ,memberDto.getPhone()
+                ,memberDto.getEmail()
+                ,Role.MEMBER);
         //매퍼 보내기
         boolean result=memberMapper.signup(memberVo);
         if(result){
@@ -52,4 +100,6 @@ public class MemberService {
             return false;
         }
     }
+
+
 }

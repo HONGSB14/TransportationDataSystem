@@ -233,7 +233,8 @@ function signup(){
 		}
 	}
 	if(check){
-	    //이메일 합치기
+
+	    //객체에 저장하기 위한 이메일 합치기
 	    let email=$("#email").val();
 	    let emailAddress = $("#emailAddress").val();
 	    let emailFinal= email+"@"+emailAddress;
@@ -248,15 +249,31 @@ function signup(){
             phone:$("#phone").val(),
             email: emailFinal
 	    };
+	    //객체를 DB에 넘기기 위해 컨트롤로 전송
 		$.ajax({
                  url:"/member/signup",
                  data:{ "memberInfo" : JSON.stringify(memberInfo) },
 		    success:function(data){
+		    //만약 DB에 회원가입을 성공 한다면
 		        if(data==true){
-		            location.href="/page/member/signupsuccess";
-		        }else{
-
-		        }
+		                //세션을 UserDetails 에 저장 하기 위해 컨트롤로 전송
+		                 $.ajax({
+                                   url:"/member/loginSession",
+                                   method: 'POST',
+                                   data:{"companyNumber":$("#companyNumber").val()},
+                                   success: function(data){
+                                       //UserDetails loginForm 에 전송
+                                       $.ajax({
+                                               url:"/member/loginController",
+                                               method: 'POST',
+                                               data:{"memberId":$("#memberId").val(),"password":$("#password").val()},
+                                               success: function(data){
+                                                    location.href="/page/member/signupsuccess";
+                                               }
+                                           });
+                                   }
+                               });
+                }
 		    }
 		});
 	}else{

@@ -1,17 +1,14 @@
-package tds.vo;
+package tds.dto;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+@Getter@Setter
+@NoArgsConstructor@AllArgsConstructor
 @ToString
-public class MemberVo {
+
+public class MemberDto {
 
     private int companyNumber;      //회사 고유 번호
     private int memberNumber;       //회원 고유 번호
@@ -20,6 +17,7 @@ public class MemberVo {
     private String memberName;     //회원 이름
     private String phone;                   //회원 전화번호
     private String email;                    //회원 이메일
-    private Role role;                          //권한
+
+
 
 }
