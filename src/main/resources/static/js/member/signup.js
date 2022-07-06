@@ -233,9 +233,12 @@ function signup(){
 		}
 	}
 	if(check){
+	    //이메일 합치기
 	    let email=$("#email").val();
 	    let emailAddress = $("#emailAddress").val();
 	    let emailFinal= email+"@"+emailAddress;
+
+	    //입력값에 따른 객체 생성
 	    let memberInfo= {
 	        companyNumber:$("#companyNumber").val(),
             memberNumber:0,
@@ -245,15 +248,15 @@ function signup(){
             phone:$("#phone").val(),
             email: emailFinal
 	    };
-	    console.log(memberInfo);
 		$.ajax({
-		    url:"/member/signup",
-		    data:{"memberInfo":memberInfo},
-		    method:"POST",
-		    contentType:false,
-		    dataType:false,
+                 url:"/member/signup",
+                 data:{ "memberInfo" : JSON.stringify(memberInfo) },
 		    success:function(data){
-		        console.log(data);
+		        if(data==true){
+		            location.href="/page/member/signupsuccess";
+		        }else{
+
+		        }
 		    }
 		});
 	}else{

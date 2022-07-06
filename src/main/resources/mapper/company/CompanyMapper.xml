@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="tds.mapper.CompanyMapper">
-        <select id="companyCheck" resultType="String">
+        <select id="companyCheck"  resultType="String">
                 SELECT crn,company_name FROM springproject.company  WHERE crn=#{crn} AND company_name=#{companyName}
         </select>
 

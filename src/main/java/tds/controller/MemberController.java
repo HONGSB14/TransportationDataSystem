@@ -1,10 +1,13 @@
 package tds.controller;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tds.service.MemberService;
 import tds.vo.MemberVo;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -21,14 +24,12 @@ public class MemberController {
 
     @GetMapping("/emailCheck")
     public boolean emailCheck(@RequestParam("emailFinal") String email){
-            System.out.println(email);
             return memberService.emailCheck(email);
     }
 
-    @PostMapping("/signup")
-    public boolean signup(@RequestParam("memberInfo")Map<String,Object> memberInfo){
-        System.out.println(memberInfo.toString());
-        return false;
+    @GetMapping("/signup")
+    public boolean signup( @RequestParam("memberInfo") String memberInfo ){  //JS 에서 받아온 json 을 String 으로 변환
+        return memberService.signup( memberInfo );
     }
 
 }

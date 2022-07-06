@@ -45,4 +45,13 @@ public class PagingController {
         return "com.tds.member/signup";
     }
 
+    @GetMapping("/member/agreement")
+    public String memberAgreement(){
+        return "com.tds.member/agreement";
+    }
+
+    @GetMapping("/member/signupsuccess")
+    public String memberSignupsuccess(){
+        return "com.tds.member/signupsuccess";
+    }
 }
