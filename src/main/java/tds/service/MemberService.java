@@ -18,6 +18,7 @@ import tds.vo.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -118,5 +119,15 @@ public class MemberService implements UserDetailsService {
         }else{
             return null;
         }
+    }
+
+    //아이디 찾기 성공 시
+    public JSONObject findIdSuccess(String findIdName){
+       JSONObject jo=new JSONObject();
+        String findId=findIdName.split(",")[0];
+        String findName=findIdName.split(",")[1];
+        jo.put("findId",findId);
+        jo.put("findName",findName);
+        return jo;
     }
 }

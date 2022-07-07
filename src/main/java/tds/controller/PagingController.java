@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class PagingController {
 
-    @Autowired
-    private MemberController memberController;
 
     ////////////////////////////////productInfo paging////////////////////////////////////////////////
     @GetMapping("/productInfo")
@@ -65,8 +63,9 @@ public class PagingController {
     }
 
     @GetMapping("/member/findIdSuccess/{findId}/{findName}")
-    public String findIdSuccess(@PathVariable("findId") String findId, @PathVariable("findName") String findName){
-        memberController.findSuccess(findId,findName);
+    public String findIdSuccess(@PathVariable("findId") String findId, @PathVariable("findName") String findName,HttpServletRequest request){
+        String findIdName=findId+","+findName;
+        request.getSession().setAttribute("findIdName",findIdName);
         return "com.tds.member/findidsuccess";
     }
 }

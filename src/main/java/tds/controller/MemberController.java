@@ -7,6 +7,7 @@ import tds.service.MemberService;
 import tds.vo.MemberVo;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
     //아이디 유효성 검사
     @GetMapping("/idCheck")
     public boolean idCheck(@RequestParam("memberId")String memberId){
@@ -56,15 +58,16 @@ public class MemberController {
         Map<String , Object>map = memberService.findId(memberName,email);
          return map;
     }
-    @PostMapping("/findIdSuccess")
-    @ResponseBody
-    public Map<String,Object> findSuccess(String findId ,String findName ){
-
-        Map<String,Object> map=new HashMap<>();
-        map.put("findId",findId);
-        map.put("findName",findName);
-        System.out.println(map.toString());
-        return map;
+    @GetMapping("/findIdSuccess")
+    public void findIdSuccess(HttpServletRequest request, HttpServletResponse response){
+        String findIdName=(String)request.getSession().getAttribute("findIdName");
+        System.out.println(findIdName+"!!Controller");
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print( memberService.findIdSuccess(findIdName));
+        }catch(Exception e){
+            System.out.println("json err !!"+e);
+        }
     }
-
 }
