@@ -61,7 +61,6 @@ public class MemberController {
     @GetMapping("/findIdSuccess")
     public void findIdSuccess(HttpServletRequest request, HttpServletResponse response){
         String findIdName=(String)request.getSession().getAttribute("findIdName");
-        System.out.println(findIdName+"!!Controller");
         try {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -69,5 +68,9 @@ public class MemberController {
         }catch(Exception e){
             System.out.println("json err !!"+e);
         }
+    }
+    @PostMapping("/findPassword")
+    public boolean findPassowrd(@RequestParam("memberId") String memberId, @RequestParam("memberName") String memberName){
+        return memberService.findPassword(memberId,memberName);
     }
 }

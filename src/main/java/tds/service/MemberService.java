@@ -130,4 +130,15 @@ public class MemberService implements UserDetailsService {
         jo.put("findName",findName);
         return jo;
     }
+
+    //비밀번호 찾기
+    public boolean findPassword(String memberId,String memberName){
+        String find=memberMapper.findPassword(memberId,memberName);
+        System.out.println(find);
+        if(find==null){ //만약 찾는 값이 없을 경우
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

@@ -68,4 +68,8 @@ public class PagingController {
         request.getSession().setAttribute("findIdName",findIdName);
         return "com.tds.member/findidsuccess";
     }
+    @GetMapping("/member/findPassword")
+    public String findPassword(){
+        return "com.tds.member/findpassword";
+    }
 }

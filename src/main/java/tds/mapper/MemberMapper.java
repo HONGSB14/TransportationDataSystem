@@ -13,4 +13,5 @@ public interface MemberMapper {
     boolean signup(MemberVo memberVo);
     MemberVo login(String memberId ,int companyNumber);
    Map<String,Object> findId(String memberName, String email);
+   String findPassword(String memberId,String memberName);
 }
