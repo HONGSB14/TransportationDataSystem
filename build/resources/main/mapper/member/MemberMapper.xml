@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tds.mapper.MemberMapper">
+
+    <select id="idCheck" resultType="String">
+            SELECT member_id FROM springproject.member WHERE member_id=#{memberId};
+    </select>
+
+    <select id="emailCheck" resultType="String">
+        SELECT email FROM springproject.member WHERE email=#{email}
+    </select>
+
+    <insert id="signup">
+            INSERT INTO springproject.member VALUES  (#{companyNumber},#{memberNumber},#{memberId},#{password},#{memberName},#{phone},#{email},#{role})
+    </insert>
+
+    <select id="login" resultType="tds.vo.MemberVo">
+        SELECT company_number,member_number,member_id,password,member_name,phone,email,role FROM springproject.member WHERE member_id=#{memberId} AND company_number=#{companyNumber}
+    </select>
+</mapper>

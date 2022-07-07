@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tds.mapper.CompanyMapper">
+        <select id="companyCheck"  resultType="String">
+                SELECT crn,company_name FROM springproject.company  WHERE crn=#{crn} AND company_name=#{companyName}
+        </select>
+
+        <select id="numberCheck" resultType="String">
+                SELECT company_number FROM springproject.company WHERE company_number=#{cnum}
+        </select>
+
+        <select id="info" parameterType="Integer" resultType="Map">
+                SELECT company_number,crn,price,company_name FROM springproject.company WHERE company_number=#{companyNumber}
+        </select>
+
+        <select id="findNumber" resultType="String">
+                SELECT company_number FROM springproject.company WHERE crn=#{crn} AND company_name=#{companyName}
+        </select>
+
+        <insert id="signup">
+                INSERT INTO springproject.company(company_number,crn,price,company_name) VALUES(#{companyNumber},#{crn},#{price},#{companyName})
+        </insert>
+
+
+
+</mapper>
