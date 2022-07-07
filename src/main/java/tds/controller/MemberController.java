@@ -7,6 +7,7 @@ import tds.service.MemberService;
 import tds.vo.MemberVo;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,11 @@ public class MemberController {
 
     @PostMapping("/loginSession")
     public void loginSession(@RequestParam("companyNumber") int companyNumber, HttpServletRequest request){
-     request.getSession().setAttribute("companyNumber",companyNumber);
+        HttpSession session = request.getSession();
+        if(session != null){    //만약 세션이 비어있지 않다면
+            session.setAttribute("companyNumber",null); //해당 세션을 초기화
+        }
+        //세션을 다시 입력
+        request.getSession().setAttribute("companyNumber",companyNumber);
     }
 }
