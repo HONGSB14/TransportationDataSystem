@@ -43,4 +43,9 @@ public class MemberController {
         //세션을 다시 입력
         request.getSession().setAttribute("companyNumber",companyNumber);
     }
+    @GetMapping("/login/{loginFalse}")
+    @ResponseBody
+    public String loginFalse(@PathVariable("loginFalse") String loginFalse){
+        return loginFalse;
+    }
 }

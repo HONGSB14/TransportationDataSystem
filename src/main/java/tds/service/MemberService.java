@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -37,15 +38,19 @@ public class MemberService implements UserDetailsService {
         int companyNumber=(Integer)request.getSession().getAttribute("companyNumber");
 
         MemberVo memberVo= memberMapper.login(memberId,companyNumber);
-        System.out.println(memberVo.toString());
-        return LoginDto.builder()
-                .memberId(memberVo.getMemberId())
-                .password(memberVo.getPassword())
-                .memberName(memberVo.getMemberName())
-                .companyNumber(memberVo.getCompanyNumber())
-                .authorities(Collections.singleton( new SimpleGrantedAuthority(memberVo.getRole().getKey())))
-                .build();
 
+            if (memberVo == null) {
+                System.out.println("로그인 실패");
+            } else {
+                return LoginDto.builder()
+                        .memberId(memberVo.getMemberId())
+                        .password(memberVo.getPassword())
+                        .memberName(memberVo.getMemberName())
+                        .companyNumber(memberVo.getCompanyNumber())
+                        .authorities(Collections.singleton(new SimpleGrantedAuthority(memberVo.getRole().getKey())))
+                        .build();
+            }
+        return null;
     }
 
     //아이디 유효성 검사

@@ -13,9 +13,11 @@ function loginCheck(){
                         method: 'POST',
                         data:{"memberId":$("#memberId").val(),"password":$("#password").val()},
                         success: function(data){
-                            console.log(data);
-                            console.log("2");
-                            //location.href="/";
+                             if( data == "loginFalse" ){
+                                    console.log("로그인 실패");
+                             }else{
+                                console.log("로그인 성공");
+                             }
                         }
                     });
             }

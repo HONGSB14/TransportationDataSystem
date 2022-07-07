@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -13,7 +14,7 @@ import tds.service.MemberService;
 @Configuration
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
+    String loginFalse="loginFalse";
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests().antMatchers("/").permitAll()
@@ -25,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  //UsernamePassword Authentication Token 발생
                 .usernameParameter("memberId")
                 .passwordParameter("password")
-                .failureUrl("/page/member/login")
+                .failureUrl("/member/login/"+loginFalse)
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
