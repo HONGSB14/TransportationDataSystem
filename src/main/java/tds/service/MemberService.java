@@ -110,11 +110,13 @@ public class MemberService implements UserDetailsService {
 
     //아이디 찾기
     public Map<String,Object> findId(String memberName, String email) {
+
         Map<String, Object> map = memberMapper.findId(memberName, email);
-        System.out.println(map);
+
         if (map != null) {
-            return map;
+            return map ;
+        }else{
+            return null;
         }
-        return null;
     }
 }

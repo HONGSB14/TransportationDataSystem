@@ -54,11 +54,17 @@ public class MemberController {
     public Map<String , Object> findId(@RequestParam("memberName") String memberName, @RequestParam("email") String email){
 
         Map<String , Object>map = memberService.findId(memberName,email);
-
-      return map;
+         return map;
     }
+    @PostMapping("/findIdSuccess")
+    @ResponseBody
+    public Map<String,Object> findSuccess(String findId ,String findName ){
 
-
-
+        Map<String,Object> map=new HashMap<>();
+        map.put("findId",findId);
+        map.put("findName",findName);
+        System.out.println(map.toString());
+        return map;
+    }
 
 }

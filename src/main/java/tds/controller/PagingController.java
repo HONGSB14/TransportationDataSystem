@@ -1,5 +1,6 @@
 package tds.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/page")
 
 public class PagingController {
+
+    @Autowired
+    private MemberController memberController;
 
     ////////////////////////////////productInfo paging////////////////////////////////////////////////
     @GetMapping("/productInfo")
@@ -61,7 +65,8 @@ public class PagingController {
     }
 
     @GetMapping("/member/findIdSuccess/{findId}/{findName}")
-    public String findIdSuccess(){
+    public String findIdSuccess(@PathVariable("findId") String findId, @PathVariable("findName") String findName){
+        memberController.findSuccess(findId,findName);
         return "com.tds.member/findidsuccess";
     }
 }
