@@ -23,24 +23,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/member/signupsuccess")
                 .loginProcessingUrl("/member/loginController")
                  //UsernamePassword Authentication Token 발생
-                .defaultSuccessUrl("/")
                 .usernameParameter("memberId")
                 .passwordParameter("password")
                 .failureUrl("/page/member/login")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
+                .logoutSuccessUrl("/")
                 .and()
                 .csrf()
+
                  //회사 가입 시
                 .ignoringAntMatchers("/page/company/signup")
                 .ignoringAntMatchers("/company/signupController")
                 .ignoringAntMatchers("/company/check")
                 .ignoringAntMatchers("/company/numberCheck")
                 .ignoringAntMatchers("/company/signup")
-                 //회사 가입 성공 시
+
+                //회사 가입 성공 시
                 .ignoringAntMatchers("/company/info")
 
                  //회원 가입 시

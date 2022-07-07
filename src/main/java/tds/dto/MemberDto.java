@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter@Setter
 @NoArgsConstructor@AllArgsConstructor
 @ToString
-
 public class MemberDto {
 
     private int companyNumber;      //회사 고유 번호
@@ -17,7 +16,5 @@ public class MemberDto {
     private String memberName;     //회원 이름
     private String phone;                   //회원 전화번호
     private String email;                    //회원 이메일
-
-
 
 }

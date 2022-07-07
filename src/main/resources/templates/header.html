@@ -22,12 +22,10 @@
             <a th:if="${session.companyNumber ==null}"  class="headerinfo" href="/page/company/signup">가입하기 |</a>
             <a th:if="${session.companyNumber ==null}"  class="headerinfo" href="/page/member/login">로그인 |</a>
             <a th:if="${session.companyNumber ==null}"  class="headerinfo" href="/page/member/agreement">회원가입</a>
-            <Strong  th:text="${#authentication.principal}"></Strong>
-            <span th:if="${session.companyNumber !=null}" style="color: blue;"> Hello !!　<Strong  th:text="${#authentication.authorities}"></Strong> </span>
-            <a th:if="${session.companyNumber !=null}"   class="headerinfo" href="#">　제품소개 | </a>
+            <a th:if="${session.companyNumber !=null}"   class="headerinfo" href="/page/productInfo">　제품소개 | </a>
             <a th:if="${session.companyNumber !=null}"   class="headerinfo" href="#">매출 데이터 보기 |</a>
             <a th:if="${session.companyNumber !=null}"   class="headerinfo" href="#">매출등록하기 |</a>
-            <a th:if="${session.companyNumber !=null}"   class="headerinfo" href="#">로그아웃 </a>
+            <a th:if="${session.companyNumber !=null}"   class="headerinfo" href="/member/logout">로그아웃 </a>
         </div>
 
     </div>

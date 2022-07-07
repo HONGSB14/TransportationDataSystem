@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tds.dto.CompanyDto;
 import tds.mapper.CompanyMapper;
 import tds.vo.CompanyVo;
 
@@ -36,8 +37,13 @@ public class CompanyService {
         }
     }
     //회사 가입
-    public boolean signup(CompanyVo companyVo){
-       return companyMapper.signup(companyVo);
+    public boolean signup(CompanyDto companydto){
+            CompanyVo companyVo = new CompanyVo(
+                    companydto.getCompanyNumber(),
+                    companydto.getCrn(),
+                    companydto.getPrice(),
+                    companydto.getCompanyName());
+        return companyMapper.signup(companyVo);
     }
 
     //회사 정보

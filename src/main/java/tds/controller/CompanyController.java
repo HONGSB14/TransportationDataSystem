@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tds.dto.CompanyDto;
 import tds.service.CompanyService;
 import tds.vo.CompanyVo;
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +40,8 @@ public class CompanyController {
 
      //회사 가입
     @PostMapping("/signup")
-    public boolean signup(CompanyVo companyVo){
-        return companyService.signup(companyVo);
+    public boolean signup(CompanyDto companyDto){
+        return companyService.signup(companyDto);
     }
 
     //회사 정보 가져오기

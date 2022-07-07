@@ -35,10 +35,9 @@ public class MemberService implements UserDetailsService {
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
 
         int companyNumber=(Integer)request.getSession().getAttribute("companyNumber");
-        System.out.println(companyNumber);
+
         MemberVo memberVo= memberMapper.login(memberId,companyNumber);
         System.out.println(memberVo.toString());
-
         return LoginDto.builder()
                 .memberId(memberVo.getMemberId())
                 .password(memberVo.getPassword())
