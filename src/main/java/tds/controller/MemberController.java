@@ -48,4 +48,17 @@ public class MemberController {
     public String loginFalse(@PathVariable("loginFalse") String loginFalse){
         return loginFalse;
     }
+
+    @PostMapping("/findId")
+    @ResponseBody
+    public Map<String , Object> findId(@RequestParam("memberName") String memberName, @RequestParam("email") String email){
+
+        Map<String , Object>map = memberService.findId(memberName,email);
+
+      return map;
+    }
+
+
+
+
 }

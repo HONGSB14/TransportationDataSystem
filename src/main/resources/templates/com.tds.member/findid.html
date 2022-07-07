@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+  <div th:replace="header.html :: header"></div>
+  <div class=" col-md-12 text-center py-5" style="background: #FFFFCC;">
+      <a href="/"><h1>Transportation Data System</h1></a>
+  </div>
+  <div class="container py-5">
+      <div class="col-md-12">
+             <div class="offset-4 col-md-4 py-3">
+                      <div class="py-5">
+                              <!--이름 입력 란 -->
+                            <div class="text-left">이름</div>
+                            <div>
+                              <input type="text" id="memberName" name="memberName" class="form-control" placeholder="가입하신 이름을 입력해주세요.">
+                            </div>
+                              <!--이메일 입력 란 -->
+                            <div class="text-left">이메일</div>
+                            <div>
+                              <input type="text" id="email" name="email" class="form-control" placeholder="가입하신 이메일을 입력해주세요.">
+                              <span id="idCheck" class="checkfalse"></span>
+                            </div>
+                      </div>
+                      <!--아이디 찾기 버튼 -->
+                      <div>
+                          <button class="form-control" type="button" onclick="findId()">아이디 찾기 </button>
+                      </div>
+                    <!--뒤로가기 -->
+                    <div class="py-3">
+                      <a href="/page/member/login"><button type="button" class="form-control">뒤로가기</button></a>
+                    </div>
+          </div>
+      </div>
+  </div>
+<script type="text/javascript" src="/js/member/findid.js"></script>
+</body>
+</html>

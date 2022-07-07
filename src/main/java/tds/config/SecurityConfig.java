@@ -57,8 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인 시
                 .ignoringAntMatchers("/page/member/login")
                 .ignoringAntMatchers("/member/loginController")
-                .ignoringAntMatchers("/member/loginSession");
+                .ignoringAntMatchers("/member/loginSession")
 
+                //아이디 찾기 시
+                .ignoringAntMatchers("/member/findId");
     }
     @Autowired
     private MemberService  memberService;

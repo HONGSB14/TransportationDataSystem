@@ -12,4 +12,5 @@ public interface MemberMapper {
     String emailCheck(String email);
     boolean signup(MemberVo memberVo);
     MemberVo login(String memberId ,int companyNumber);
+   Map<String,Object> findId(String memberName, String email);
 }

@@ -19,4 +19,8 @@
     <select id="login" resultType="tds.vo.MemberVo">
         SELECT company_number,member_number,member_id,password,member_name,phone,email,role FROM springproject.member WHERE member_id=#{memberId} AND company_number=#{companyNumber}
     </select>
+
+    <select id="findId" resultType="map">
+        SELECT member_id,member_name FROM springproject.member WHERE member_name=#{memberName} and email=#{email}
+    </select>
 </mapper>

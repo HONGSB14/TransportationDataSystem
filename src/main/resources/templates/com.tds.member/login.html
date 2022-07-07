@@ -14,20 +14,22 @@
 
     <div class="col-md-12 text-center">
         <form method="post" action="/member/loginController">
-
+            <!--회사 등록번호 입력 란-->
             <div class="offset-4 col-md-3 py-2 ">
                 <input class="form-control" type="text" id="companyNumber" name="companyNumber"  placeholder="회사등록번호">
             </div>
-
+            <!--아이디 입력 란-->
             <div class="offset-4 col-md-3 py-2 ">
                 <input class="form-control" type="text" id="memberId" name="memberId"  placeholder="아이디">
             </div>
-
+            <!--비밀번호 입력 란 -->
             <div class="offset-4 col-md-3 py-2">
                 <input class="form-control" type="password" id="password" name="password"  placeholder="비밀번호">
             </div>
-
-
+            <!--로그인 실패 시 에러 메시지-->
+            <div class="offset-4 col-md-3 py-1">
+                <span id="loginCheck" class="checkfalse"></span>
+            </div>
             <div class="offset-4 col-md-3 py-2">
                 <input class="form-control" type="button" onclick="loginCheck()"  value="로그인">
             </div>
@@ -38,7 +40,7 @@
         </div>
 
         <div class="offset-4 col-md-3 py-2">
-            <a href="#"><button class="form-control">아이디찾기</button></a>
+            <a href="/page/member/findid"><button class="form-control">아이디찾기</button></a>
         </div>
 
         <div class="offset-4 col-md-3 py-2">

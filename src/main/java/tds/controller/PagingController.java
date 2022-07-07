@@ -55,4 +55,13 @@ public class PagingController {
         return "com.tds.member/signupsuccess";
     }
 
+    @GetMapping("/member/findid")
+    public String findId(){
+        return "com.tds.member/findid";
+    }
+
+    @GetMapping("/member/findIdSuccess/{findId}/{findName}")
+    public String findIdSuccess(){
+        return "com.tds.member/findidsuccess";
+    }
 }

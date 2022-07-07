@@ -31,79 +31,90 @@ public class MemberService implements UserDetailsService {
 
     @Autowired
     private HttpServletRequest request;
+
     //재정의 가 된 UserDetail
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
 
-        int companyNumber=(Integer)request.getSession().getAttribute("companyNumber");
+        int companyNumber = (Integer) request.getSession().getAttribute("companyNumber");
 
-        MemberVo memberVo= memberMapper.login(memberId,companyNumber);
+        MemberVo memberVo = memberMapper.login(memberId, companyNumber);
 
-            if (memberVo == null) {
-                System.out.println("로그인 실패");
-            } else {
-                return LoginDto.builder()
-                        .memberId(memberVo.getMemberId())
-                        .password(memberVo.getPassword())
-                        .memberName(memberVo.getMemberName())
-                        .companyNumber(memberVo.getCompanyNumber())
-                        .authorities(Collections.singleton(new SimpleGrantedAuthority(memberVo.getRole().getKey())))
-                        .build();
-            }
+        if (memberVo == null) {
+
+        } else {
+            return LoginDto.builder()
+                    .memberId(memberVo.getMemberId())
+                    .password(memberVo.getPassword())
+                    .memberName(memberVo.getMemberName())
+                    .companyNumber(memberVo.getCompanyNumber())
+                    .authorities(Collections.singleton(new SimpleGrantedAuthority(memberVo.getRole().getKey())))
+                    .build();
+        }
         return null;
     }
 
     //아이디 유효성 검사
-    public boolean idCheck(String memberId){
-        String id=memberMapper.idCheck(memberId);
-        if(id==null){
+    public boolean idCheck(String memberId) {
+        String id = memberMapper.idCheck(memberId);
+        if (id == null) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
     //이메일 유효성 검사
-    public boolean emailCheck(String email){
-       String emailCheck=memberMapper.emailCheck(email);
-       if(emailCheck==null){
-           return true;
-       }else {
-           return false;
-       }
+    public boolean emailCheck(String email) {
+        String emailCheck = memberMapper.emailCheck(email);
+        if (emailCheck == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
     //회원 가입
-    public boolean signup(String memberInfo){
+    public boolean signup(String memberInfo) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         // controller 에서 받아온 String 값을 json 으로 형 변환
-        JSONObject jo = new JSONObject(  memberInfo  );
+        JSONObject jo = new JSONObject(memberInfo);
         //Dto 에 담기
-        MemberDto memberDto =  new MemberDto(
-                Integer.parseInt( String.valueOf( jo.get("companyNumber") ) ),
-                Integer.parseInt(String.valueOf( jo.get("memberNumber") )),
+        MemberDto memberDto = new MemberDto(
+                Integer.parseInt(String.valueOf(jo.get("companyNumber"))),
+                Integer.parseInt(String.valueOf(jo.get("memberNumber"))),
                 (String) (jo.get("memberId")),
-                 encoder.encode((String) (jo.get("password"))) ,    //암호화
+                encoder.encode((String) (jo.get("password"))),    //암호화
                 (String) (jo.get("memberName")),
                 (String) (jo.get("phone")),
                 (String) (jo.get("email"))
-                );
+        );
         //Dto--> VO 이동
         MemberVo memberVo = new MemberVo(
                 memberDto.getCompanyNumber()
-                ,memberDto.getMemberNumber()
-                ,memberDto.getMemberId()
-                ,memberDto.getPassword()
-                ,memberDto.getMemberName()
-                ,memberDto.getPhone()
-                ,memberDto.getEmail()
-                ,Role.MEMBER);
+                , memberDto.getMemberNumber()
+                , memberDto.getMemberId()
+                , memberDto.getPassword()
+                , memberDto.getMemberName()
+                , memberDto.getPhone()
+                , memberDto.getEmail()
+                , Role.MEMBER);
         //매퍼 보내기
-        boolean result=memberMapper.signup(memberVo);
-        if(result){
+        boolean result = memberMapper.signup(memberVo);
+        if (result) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-
+    //아이디 찾기
+    public Map<String,Object> findId(String memberName, String email) {
+        Map<String, Object> map = memberMapper.findId(memberName, email);
+        System.out.println(map);
+        if (map != null) {
+            return map;
+        }
+        return null;
+    }
 }
