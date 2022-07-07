@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'KOHIBaeumOTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/KOHIBaeumOTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MaruBuri-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/MaruBuri-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.memberSignup{ font-family: 'MaruBuri-Regular';}
+
+*{font-family: 'KOHIBaeumOTF';}
+
+a{text-decoration: none; color: black }
+
+.checktrue{color: blue};
+
+.checkfalse{color: red};
+
+#must_do{color: red;}
+
+#mainp{font-size: 65px;  color: BLACK;}
+
+#mainp2{font-size: 45px; color: BLACK;}
+
+#mainlogo{width: 100%;}
+
+#welcome{font-size: 30px;};
+
+#main1{background: yellow};
+
+
+
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div th:replace="header.html :: header"></div>
+
+<div class="container">
+    <!-- 기입란 -->
+    <div class="col-md-12 py-5">
+        <div class="offset-4 col-md-4">
+
+            <form id="signupForm" method="post" action="/company/signupController" >
+                <!-- 가격 선택 란 -->
+                <div class="py-3">
+                    <div class="col-md-4 text-left">가격선택 (월)<Strong class="must_do">*</Strong></div>
+                    <div>
+                        <select name="price" class="form-control text-center" id="price">
+
+                            <option id="first">원하시는 가격을 선택해 주세요.</option>
+                            <option value="1">30,000원  (기본 표 제공)</option>
+                            <option value="2">60,000원  (표+차트 제공)</option>
+                            <option value="3">90,000원  (표+차트+탑승데이터 제공)</option>
+                        </select>
+                    </div>
+                    <!-- 중복체크 안내표시 -->
+                    <span class="checktrue" id="pricecheck"></span>
+                </div>
+
+                <!-- 회사이름  입력 란 -->
+                <div class="py-3">
+                    <div class="col-md-4 text-left">회사 이름<Strong class="must_do">*</Strong></div>
+                    <div>
+                        <input type="text" class="form-control" name="companyName" id="companyName">
+                    </div>
+                    <!-- 중복체크 안내표시 -->
+                    <span class="checktrue" id="namecheck"></span>
+                    <span class="checkfalse" id="namecheck2"></span>
+                </div>
+
+                <!-- 사업자 등록번호 입력 란  -->
+                <div class="py-3">
+                    <div class="col-md-5 text-left">사업자 등록번호<Strong class="must_do">*</Strong></div>
+                    <div>
+                        <input type="text" id="crn" name="crn"  class="form-control" placeholder="( ' ─ ' )제외  10자리 ">
+                    </div>
+                    <!-- 중복체크 안내표시 -->
+                    <span class="checktrue" id="bncheck"></span>
+                    <span class="checkfalse" id="bncheck2"></span>
+                </div>
+                <!--회사 등록 중복체크-->
+                <button type="button" id="btncheck" class="form-control" onclick="companyCheck()">중복체크</button>
+                <span class="checktrue" id="numbercheck"></span>
+                <span class="checkfalse" id="numbercheck2"></span>
+                <!-- 회사가입고유번호  입력 란 -->
+                <div class="py-3">
+                    <div class="col-md-4 text-left">가입고유번호<Strong class="must_do">*</Strong></div>
+                    <div>
+                        <input value="" type="text" name="companyNumber" id="companyNumber" class="form-control" readonly="readonly">
+                    </div>
+                    <span class="checktrue" id="signupcheck"></span>
+                    <span class="checkfalse" id="signupcheck2"></span>
+                </div>
+            </form>
+            <!-- 등록버튼 -->
+            <div class="col-md-12 py-3">
+                <button class="form-control" type="button" onclick="requestPay()">결제하기</button>
+            </div>
+            <div class="col-md-12">
+                <a href="/"><button class="form-control" type="button">홈으로</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script src="/js/company/signup.js" type="text/javascript"></script>
+<div th:replace="footer.html :: footer"></div>
+</body>
+</html>
