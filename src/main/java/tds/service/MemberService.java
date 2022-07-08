@@ -156,36 +156,20 @@ public class MemberService implements UserDetailsService {
 
                 StringBuilder html=new StringBuilder();
                 StringBuilder authKey= new StringBuilder();
-                html.append("<html><body><h1>TransportationDataSystem</h1>");
+                html.append("<html><body><h3>TransportationDataSystem</h3>");
                 authKey.append(randomNumber);
-                html.append("<a href='http://localhost:8805/member/findPassword'></a>");
+                html.append("<h3>회원님의 비밀번호는 <h3><br>");
+                html.append("<h1>"+authKey+"</h1><br>");
+                html.append("<h3>입니다. <h3><br>");
                 html.append("</body></html>");
-//                MimeMessage message=javaMailSender.createMimeMessage();
-//                MimeMessageHelper mimeMessageHelper= new MimeMessageHelper(message,true,"UTF-8");
-//                mimeMessageHelper.setFrom("sbin014@naver.com","TransportationDataSystem");
-//                mimeMessageHelper.setTo(email);
-//                mimeMessageHelper.setSubject("비밀번호 인증 메일");
-//                mimeMessageHelper.setText(html.toString());
-//                javaMailSender.send(message);
-                MimeMessage message = javaMailSender.createMimeMessage();   //     Mime 프로토콜 :  메시지안에 텍스트외 내용을 담는 프로토콜 [  SMTP 와 같이 많이 사용됨]
-                // 0. Mime 설정
-                MimeMessageHelper mimeMessageHelper
-                        = new MimeMessageHelper( message , true, "utf-8"); // 예외처리 발생
-                // 1. 보내는사람
-                mimeMessageHelper.setFrom("sbin014@naver.com" , "Ezen 부동산");
-                // 2. 받는 사람
-                mimeMessageHelper.setTo( email );
-                // 3. 메일 제목
-                mimeMessageHelper.setSubject( "title" );
-                // 4. 메일 내용
-                mimeMessageHelper.setText( html.toString() );
-                System.out.println(message.toString());
-                // 5. 메일 전송
-                javaMailSender.send(  message );
+                MimeMessage message=javaMailSender.createMimeMessage();
+                MimeMessageHelper mimeMessageHelper= new MimeMessageHelper(message,true,"UTF-8");
+                mimeMessageHelper.setFrom("sbin014@gmail.com","TransportationDataSystem");
+                mimeMessageHelper.setTo(email);
+                mimeMessageHelper.setSubject("비밀번호 인증 메일");
+                mimeMessageHelper.setText(html.toString() ,true);
+                javaMailSender.send(message);
 
-
-
-                System.out.println(randomNumber+"333333333");
                 return randomNumber;
             }catch(Exception e){
                 System.out.println("trans email false : "+ e );

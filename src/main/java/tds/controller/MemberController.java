@@ -79,7 +79,6 @@ public class MemberController {
     public Map<String , Object> authenticationNumber(@RequestParam("memberId") String memberId, HttpServletResponse response){
         Map<String,Object> map=new HashMap<>();
         String number=memberService.authenticationNumber(memberId);
-
         map.put("number",number);
         return map;
     }

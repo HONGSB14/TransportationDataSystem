@@ -1,5 +1,4 @@
 
-
 function findPassword(){
  $.ajax({
            url:"/member/findPassword",
@@ -15,7 +14,9 @@ function findPassword(){
                             data:{memberId:$("#memberId").val()},
                             method:"GET",
                             success: function(data){
-                                console.log(data);
+                                let number=data.number;
+                                findAuthentication(number);
+                                console.log(number);
                             }
                         });
                 }else { // 값이 없을 경우
@@ -24,6 +25,14 @@ function findPassword(){
                 }
            }
        });
-
-
 }
+
+  function findAuthentication(number){
+
+        if(number==$("#authenticationNumber").val){
+            location.href="/";
+        }else{
+               location.href="/";
+        }
+
+ }
