@@ -2,6 +2,8 @@ package tds.service;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +17,10 @@ import tds.mapper.MemberMapper;
 import tds.vo.MemberVo;
 import tds.vo.Role;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -33,6 +33,8 @@ public class MemberService implements UserDetailsService {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
     //재정의 가 된 UserDetail
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
@@ -134,11 +136,61 @@ public class MemberService implements UserDetailsService {
     //비밀번호 찾기
     public boolean findPassword(String memberId,String memberName){
         String find=memberMapper.findPassword(memberId,memberName);
-        System.out.println(find);
         if(find==null){ //만약 찾는 값이 없을 경우
             return false;
         }else{
             return true;
+        }
+    }
+
+    //인증 비밀번호 생성 후 메일로 전송
+    public String authenticationNumber(String memberId){
+        String email=memberMapper.findEmail(memberId);
+
+        if(email==null){
+            return null;
+        }else{
+            try {
+                Random random=new Random();
+                String randomNumber=Integer.toString(random.nextInt(100001+999999)) ;
+
+                StringBuilder html=new StringBuilder();
+                StringBuilder authKey= new StringBuilder();
+                html.append("<html><body><h1>TransportationDataSystem</h1>");
+                authKey.append(randomNumber);
+                html.append("<a href='http://localhost:8805/member/findPassword'></a>");
+                html.append("</body></html>");
+//                MimeMessage message=javaMailSender.createMimeMessage();
+//                MimeMessageHelper mimeMessageHelper= new MimeMessageHelper(message,true,"UTF-8");
+//                mimeMessageHelper.setFrom("sbin014@naver.com","TransportationDataSystem");
+//                mimeMessageHelper.setTo(email);
+//                mimeMessageHelper.setSubject("비밀번호 인증 메일");
+//                mimeMessageHelper.setText(html.toString());
+//                javaMailSender.send(message);
+                MimeMessage message = javaMailSender.createMimeMessage();   //     Mime 프로토콜 :  메시지안에 텍스트외 내용을 담는 프로토콜 [  SMTP 와 같이 많이 사용됨]
+                // 0. Mime 설정
+                MimeMessageHelper mimeMessageHelper
+                        = new MimeMessageHelper( message , true, "utf-8"); // 예외처리 발생
+                // 1. 보내는사람
+                mimeMessageHelper.setFrom("sbin014@naver.com" , "Ezen 부동산");
+                // 2. 받는 사람
+                mimeMessageHelper.setTo( email );
+                // 3. 메일 제목
+                mimeMessageHelper.setSubject( "title" );
+                // 4. 메일 내용
+                mimeMessageHelper.setText( html.toString() );
+                System.out.println(message.toString());
+                // 5. 메일 전송
+                javaMailSender.send(  message );
+
+
+
+                System.out.println(randomNumber+"333333333");
+                return randomNumber;
+            }catch(Exception e){
+                System.out.println("trans email false : "+ e );
+            }
+            return null;
         }
     }
 }

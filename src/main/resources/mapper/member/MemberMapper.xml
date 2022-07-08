@@ -27,4 +27,8 @@
     <select id="findPassword" resultType="String">
             SELECT password FROM springproject.member WHERE member_id=#{memberId} AND member_name=#{memberName}
     </select>
+
+    <select id="findEmail" resultType="String">
+        SELECT email FROM springproject.member WHERE member_id=#{memberId};
+    </select>
 </mapper>

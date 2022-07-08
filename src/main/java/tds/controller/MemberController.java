@@ -73,4 +73,14 @@ public class MemberController {
     public boolean findPassowrd(@RequestParam("memberId") String memberId, @RequestParam("memberName") String memberName){
         return memberService.findPassword(memberId,memberName);
     }
+
+    @GetMapping("/authenticationNumber")
+    @ResponseBody
+    public Map<String , Object> authenticationNumber(@RequestParam("memberId") String memberId, HttpServletResponse response){
+        Map<String,Object> map=new HashMap<>();
+        String number=memberService.authenticationNumber(memberId);
+
+        map.put("number",number);
+        return map;
+    }
 }

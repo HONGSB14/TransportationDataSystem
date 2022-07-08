@@ -21,6 +21,14 @@
     </select>
 
     <select id="findId" resultType="map">
-        SELECT member_id,member_name FROM springproject.member WHERE member_name=#{memberName} and email=#{email}
+        SELECT member_id,member_name FROM springproject.member WHERE member_name=#{memberName} AND email=#{email}
+    </select>
+
+    <select id="findPassword" resultType="String">
+            SELECT password FROM springproject.member WHERE member_id=#{memberId} AND member_name=#{memberName}
+    </select>
+
+    <select id="findEmail" resultType="String">
+        SELECT email FROM springproject.member WHERE member_id=#{memberId};
     </select>
 </mapper>
