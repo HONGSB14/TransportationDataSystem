@@ -82,4 +82,13 @@ public class MemberController {
         map.put("number",number);
         return map;
     }
+
+    @PutMapping("/passwordUpdate")
+    public boolean passwordUpdate(@RequestParam("password") String password,HttpServletRequest request){
+
+        String id=(String)request.getSession().getAttribute("id");
+
+        return memberService.passwordUpdate(id,password);
+    }
+
 }

@@ -177,4 +177,14 @@ public class MemberService implements UserDetailsService {
             return null;
         }
     }
+    //패스워드 변경
+    public boolean passwordUpdate(String id,String password){
+        BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder();
+        System.out.println(id + " service");
+        //입력받은 값 암호화
+        String passwordEncrypt =encoder.encode(password);
+        return  memberMapper.passwordUpdate(id,passwordEncrypt);
+    }
+
+
 }

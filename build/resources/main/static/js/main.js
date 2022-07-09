@@ -1,7 +1,8 @@
-$(function(){
-
-setInterval(function(){
-  $("#blink").toggle();
-}, 450);
-
-});
+//블링크
+//$(function(){
+//
+//setInterval(function(){
+//  $("#blink").toggle();
+//}, 450);
+//
+//});

@@ -12,10 +12,6 @@
         SELECT email FROM springproject.member WHERE email=#{email}
     </select>
 
-    <insert id="signup">
-            INSERT INTO springproject.member VALUES  (#{companyNumber},#{memberNumber},#{memberId},#{password},#{memberName},#{phone},#{email},#{role})
-    </insert>
-
     <select id="login" resultType="tds.vo.MemberVo">
         SELECT company_number,member_number,member_id,password,member_name,phone,email,role FROM springproject.member WHERE member_id=#{memberId} AND company_number=#{companyNumber}
     </select>
@@ -25,10 +21,19 @@
     </select>
 
     <select id="findPassword" resultType="String">
-            SELECT password FROM springproject.member WHERE member_id=#{memberId} AND member_name=#{memberName}
+        SELECT password FROM springproject.member WHERE member_id=#{memberId} AND member_name=#{memberName}
     </select>
 
     <select id="findEmail" resultType="String">
-        SELECT email FROM springproject.member WHERE member_id=#{memberId};
+        SELECT email FROM springproject.member WHERE member_id=#{memberId}
     </select>
+
+    <insert id="signup">
+            INSERT INTO springproject.member VALUES  (#{companyNumber},#{memberNumber},#{memberId},#{password},#{memberName},#{phone},#{email},#{role})
+    </insert>
+
+    <update id="passwordUpdate" parameterType="String">
+            UPDATE springproject.member SET password=#{passwordEncrypt} WHERE member_id=#{id}
+    </update>
+
 </mapper>

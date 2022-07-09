@@ -1,4 +1,5 @@
-
+let number="";
+let id="";
 function findPassword(){
  $.ajax({
            url:"/member/findPassword",
@@ -14,8 +15,8 @@ function findPassword(){
                             data:{memberId:$("#memberId").val()},
                             method:"GET",
                             success: function(data){
-                                let number=data.number;
-                                findAuthentication(number);
+                                id=$("#memberId").val();
+                                number=data.number;
                                 console.log(number);
                             }
                         });
@@ -27,12 +28,17 @@ function findPassword(){
        });
 }
 
-  function findAuthentication(number){
-
-        if(number==$("#authenticationNumber").val){
-            location.href="/";
-        }else{
-               location.href="/";
-        }
-
+  function findAuthentication(){
+     if($("#authenticationNumber").val() !=""){
+            if(number==$("#authenticationNumber").val()){
+                    location.href="/page/member/findPasswordSuccess/"+id;
+            }else{
+                 $("#numberCheck").html("인증이 실패되었습니다. 다시한번 확인해 주십시오.");
+           }
+     }else{
+            $("#numberCheck").html("인증이 실패되었습니다. 다시한번 확인해 주십시오.");
+     }
  }
+
+
+
