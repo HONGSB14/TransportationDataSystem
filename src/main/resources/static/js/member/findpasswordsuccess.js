@@ -52,6 +52,7 @@ function passwordUpdate(){
                  data:{"password":$("#password").val()},
                  success:function(data){
                        if(data==true){
+                            sessionStorage.clear();
                             location.href="/";
                        }else{
                                 $("#passwordUpdateCheck").html("비밀번호 변경이 실패하였습니다. 계속 반복되는 경우 관리자에게 문의 해 주십시오.");

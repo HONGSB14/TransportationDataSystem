@@ -268,7 +268,7 @@ function signup(){
                                                method: 'POST',
                                                data:{"memberId":$("#memberId").val(),"password":$("#password").val()},
                                                success: function(data){
-                                                    location.href="/page/member/signupsuccess";
+                                                    location.href="/page/member/signupSuccess";
                                                }
                                            });
                                    }

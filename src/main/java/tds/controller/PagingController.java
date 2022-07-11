@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PagingController {
 
 
-    ////////////////////////////////productInfo paging////////////////////////////////////////////////
+    ////////////////////////////////PRODUCT INFO PAGE////////////////////////////////////////////////
     @GetMapping("/productInfo")
     public String productInfo(){
         return "com.tds.productinfo/productinfo";
@@ -35,7 +35,7 @@ public class PagingController {
         return "com.tds.company/success";
     }
 
-    ////////////////////////////////// //member paging////////////////////////////////////////////////
+    ////////////////////////////////////MEMBER PAGE////////////////////////////////////////////////
 
     @GetMapping("/member/login")
     public String memberLogin(){
@@ -52,7 +52,7 @@ public class PagingController {
         return "com.tds.member/agreement";
     }
 
-    @GetMapping("/member/signupsuccess")
+    @GetMapping("/member/signupSuccess")
     public String memberSignupsuccess(){
         return "com.tds.member/signupsuccess";
     }
@@ -77,5 +77,15 @@ public class PagingController {
     public String findPasswordSuccess(@PathVariable("id") String id,HttpServletRequest request){
         request.getSession().setAttribute("id",id);
         return "com.tds.member/findpasswordsuccess";
+    }
+    ///////////////////////////////////////SALE PAGE ////////////////////////////////////////////////////////////
+    @GetMapping("/sale/mainSaleTable")
+    public String mainSaleTable(){
+        return "com.tds.sale/mainsaletable";
+    }
+
+    @GetMapping("/sale/registration")
+    public String saleResistration(){
+        return "com.tds.sale/registration";
     }
 }

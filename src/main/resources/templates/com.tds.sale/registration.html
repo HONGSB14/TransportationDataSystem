@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+<div  th:replace="header.html :: header"></div>
+<div class="container">
+    <!----------------------------------------------------- 매출등록 란 ------------------------------------------>
+    <div class="col-md-12 text-center">
+        <a href="/page/sale/mainSaleTable"><h1>SALES</h1></a>
+        <!-- 매출등록 헤더 -->
+        <div class="row">
+            <div id="today" class="col-md-2">
+                <!--JS에서 처리 (오늘 날짜 ) -->
+            </div>
+            <div class="text-center">
+                <h3>일보 등록</h3>
+            </div>
+        </div>
+        <div class="row">
+            <!--타코미터 리스트 버튼 -->
+            <div class="offset-6 col-md-2 py-2">
+                <a href="#"><button class="form-control">타코미터 기록보기</button></a>
+            </div>
+
+            <!-- 매출 검색 버튼 -->
+            <div class="col-md-2 py-2">
+                <button type="button" class="form-control" data-bs-toggle="modal" data-bs-target="#searchSale">등록 날짜 검색</button>
+            </div>
+
+            <!-- 매출 삭제 버튼 -->
+            <div class="col-md-2 py-2">
+                <button class="form-control" onclick="saleDelete(company_number)">매출 삭제</button>
+            </div>
+
+            <!-- 모달 -->
+            <div class="modal fade" id="searchSale" tabindex="-1" aria-labelledby="searchSale" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="../slip/SearchCurrent" method="get">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="searchSaleModalLabel">등록 날짜 검색</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                            </div>
+                            <!-- 달력 날짜 선택 란 -->
+                            <div   id="monthChoice" class="modal-body">
+                                <!-- JS 에서 처리 -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="form-control" data-bs-dismiss="modal">Search</button>
+                                <button type="button" class="form-control" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 매출정보 기입 란 -->
+    <div class="col-md-12">
+        <form id="saleForm" method="get">
+
+            <!-- 매출정보 뷰 -->
+            <div class="row">
+                <table class="table">
+                    <tr class="table-info"><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th></tr>
+                    <tr>
+                        <td><input type="text" name="carNumber" id="carNumber" class="form-control"></td> 					<!-- 차량번호 -->
+                        <td><input type="text" name="flux" id="flux"  class="form-control" autofocus="autofocus"></td>    <!-- 유량 -->
+                        <td><input type="text" name="fee" id="fee"  class="form-control"></td >								                <!-- 실입요금 -->
+                        <td><input type="text" name="cardFee" id="cardFee"   class="form-control"></td> 					        <!-- 카드요금 -->
+                        <td><input type="text" name="totalSale" id="totalSale"  class="form-control"></td> 						    <!-- 총 매출 -->
+                        <td><input type="text" name="note" id="note"  class="form-control"></td> 							                <!-- 비고 -->
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-12 text-center">
+                    <span class="checktrue" id="registrationCheck"></span>
+                    <span class="checkfalse" id="registrationCheck2"></span>
+            </div>
+        </form>
+        <!-- 등록/취소 (버튼) -->
+        <div class="offset-5 col-md-2">
+            <!-- 등록버튼 -->
+            <div class="text-center">
+                <button class="form-control" onclick="saleCheck()" type="button">등록</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+    <div th:replace="footer.html :: footer"></div>
+    <script src="/js/sale/registration.js"></script>
+</body>
+</html>
