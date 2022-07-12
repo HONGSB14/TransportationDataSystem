@@ -8,11 +8,21 @@
             INSERT INTO springproject.slip values(#{companyNumber},#{slipNumber},#{carNumber},#{flux},#{fee},#{cardFee},#{totalSale},#{note},#{date,jdbcType=TIMESTAMP})
     </insert>
 
+    <insert id="registrationDate">
+        INSERT INTO springproject.slip values(#{companyNumber},#{slipNumber},#{carNumber},#{flux},#{fee},#{cardFee},#{totalSale},#{note},#{date})
+    </insert>
+
     <select id="tableView" resultType="tds.vo.SaleVo">
         SELECT slip_number,car_number,flux,fee,card_fee,total_sale,note,date FROM springproject.slip WHERE company_number=#{companyNumber}
+    </select>
+
+    <select id="dateSearchTable" resultType="tds.vo.SaleVo">
+        SELECT slip_number,car_number,flux,fee,card_fee,total_sale,note,date FROM springproject.slip WHERE company_number=#{companyNumber} and DATE(date)=#{searchDate}
     </select>
 
     <delete id="delete">
             DELETE FROM springproject.slip WHERE company_number=#{companyNumber} and slip_number=#{slipNumber}
     </delete>
+
+
 </mapper>

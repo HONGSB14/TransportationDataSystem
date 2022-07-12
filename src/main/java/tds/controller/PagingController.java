@@ -88,4 +88,10 @@ public class PagingController {
     public String saleResistration(){
         return "com.tds.sale/registration";
     }
+
+    @GetMapping("/sale/searchRegistration/{searchDate}")
+    public String saleSearch(@PathVariable("searchDate") String searchDate ,HttpServletRequest request){
+        request.getSession().setAttribute("searchDate",searchDate);
+        return "com.tds.sale/searchregistration";
+    }
 }

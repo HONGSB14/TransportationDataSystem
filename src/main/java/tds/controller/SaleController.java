@@ -50,4 +50,30 @@ public class SaleController {
         return saleService.delete(companyNumber,slipNumber);
 
     }
+
+    @GetMapping("/getDate")
+    public Map<String,Object> getDate(HttpServletRequest request){
+        String searchDate=(String)request.getSession().getAttribute("searchDate");
+        Map<String,Object> map= new HashMap<>();
+        map.put("searchDate",searchDate);
+        return  map;
+    }
+
+    @GetMapping("/dateSearchTable")
+    public void dateSearchTable(@RequestParam("searchDate") String searchDate, @RequestParam("companyNumber") int companyNumber,HttpServletResponse response){
+        try{
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(saleService.dateSearchTable(searchDate,companyNumber));
+        }
+        catch(Exception e){
+            System.out.println("dateSearchTable json err!!"+e);
+        }
+    }
+
+    @GetMapping("/registrationDate")
+    public boolean registrationDate(@RequestParam("slipForm") String slipForm) {
+        return saleService.registrationDate(slipForm);
+    }
+
 }

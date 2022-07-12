@@ -41,10 +41,9 @@ $(function(){
     //오늘날짜
     $("#today").html("<h6>"+today+"</h6");
     //날짜 검색
-    $("#monthChoice").html("<input class='form-control' type='date' name='date' min="+beforeDate+" max="+yesterday+">");
+    $("#dateChoice").html("<input class='form-control' type='date' name='date' id='date' min="+beforeDate+" max="+yesterday+">");
 
     //입력 유효성 검사 및 컴마 생성
-
     //차번호 유효성검사
     $("#carNumber").keyup(function(){
 
@@ -257,8 +256,7 @@ function tableView(){
                         let hh=hhmmss.slice(0,2);
                    if(today==yyMMdd){
                         if(hh<12){  //오전
-                               html +=
-                                      			'<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
+                               html +=    '<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
                                       				'<tr>'+
                                       				'<td><input class="form-check-input" type="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick="deleteCheck('+data[i].slipNumber+')"></td>'+
                                       				  '<td>'+data[i].carNumber+'</td>'+
@@ -271,7 +269,7 @@ function tableView(){
                                       			 '</tr>';
                         }else{      //오후
                                      html2 +=
-                                               '<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
+                                                   '<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
                                                    '<tr>'+
                                                         '<td><input class="form-check-input" type="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick="deleteCheck('+data[i].slipNumber+')"></td>'+
                                                         '<td>'+data[i].carNumber+'</td>'+
@@ -310,20 +308,30 @@ let check=$('input:checkbox[id='+boxId+']').is(":checked") == true
 //삭제 버튼 클릭 시
 function saleDelete(slipNumber){
 
-	alert("정말 삭제를 진행하시겠습니까?");
+	let window=confirm("정말 삭제를 진행하시겠습니까?");
+    if(window){
+    		$.ajax({
+    					url:"/sale/saleDelete",
+    					method:"DELETE",
+    					data:{"companyNumber":session,"slipNumber":slipNumberBox},
+    					success:function(data){
+    					console.log(data);
+    						if(data==true){
+    							 slipNumberBox.splice(0, slipNumberBox.length);
+                                 location.reload();
+    						}else{
+    							alert("삭제진행 오류가 발생하였습니다. 관리자에게 문의해주십시오.");
+    						}
+    				    }
+    			});
+    }else{
+        return;
+    }
 
-				$.ajax({
-					url:"/sale/saleDelete",
-					method:"DELETE",
-					data:{"companyNumber":session,"slipNumber":slipNumberBox},
-					success:function(data){
-					console.log(data);
-						if(data==true){
-							 slipNumberBox.splice(0, slipNumberBox.length);
-                             location.reload();
-						}else{
-							alert("삭제진행 오류가 발생하였습니다. 관리자에게 문의해주십시오.");
-						}
-				    }
-				});
+}
+
+
+function dateSearch(){
+     let searchDate=$("#date").val();
+     location.href="/page/sale/searchRegistration/"+searchDate;
 }

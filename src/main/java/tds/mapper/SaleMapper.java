@@ -16,4 +16,7 @@ public interface SaleMapper {
 
   boolean delete(int companyNumber,int slipNumber);
 
+  List<SaleVo> dateSearchTable(String searchDate,int companyNumber);
+
+    boolean registrationDate(SaleVo saleVo);
 }
