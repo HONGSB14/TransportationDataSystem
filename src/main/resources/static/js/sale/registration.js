@@ -26,14 +26,15 @@ let yesterday=year+"-"+month+"-"+dateOne;
 //유효성 검사
 let pass=[false,false,false,false];
 //삭제 및 수정 배열 담기
-let companyNumber=[];
+let slipNumberBox=[];
 let uFlux=[];
 let uFee=[];
 let uCardFee=[];
 let uTotalSale=[];
 let uCarNumber=[];
 let uNote=[];
-
+//테이블 뷰 함수 실행
+tableView();
 $(function(){
 
 
@@ -153,6 +154,8 @@ $(function(){
 	});
 
 
+
+
 });//문서종료
 
 
@@ -209,6 +212,7 @@ function saleCheck(){
     	            if(data==true){
     	                  $("#registrationCheck2").html("");
                           $("#registrationCheck").html("등록되었습니다.");
+                          location.reload();
     	                  valuesClear();
 
     	            }else{
@@ -222,7 +226,10 @@ function saleCheck(){
     		$("#registrationCheck2").html("등록할 수 없는 형식입니다.");
     	}
 }
-//모든 값 제거
+
+
+
+//모든 값 제거 함수
 function valuesClear(){
      $("#carNumber").val("");
      $("#flux").val("");
@@ -232,3 +239,91 @@ function valuesClear(){
      $("#note").val("");
 }
 
+
+//테이블 뷰 함수
+function tableView(){
+
+    $.ajax({
+        url:"/sale/tableView",
+        data:{"companyNumber":session},
+        async:true,
+        success: function(data){
+               let html="";
+                let html2="";
+                for(let i=0; i<data.length; i++){
+                       let date=data[i].date;
+                        let yyMMdd=date.split(" ")[0];
+                        let hhmmss=date.split(" ")[1];
+                        let hh=hhmmss.slice(0,2);
+                   if(today==yyMMdd){
+                        if(hh<12){  //오전
+                               html +=
+                                      			'<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
+                                      				'<tr>'+
+                                      				'<td><input class="form-check-input" type="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick="deleteCheck('+data[i].slipNumber+')"></td>'+
+                                      				  '<td>'+data[i].carNumber+'</td>'+
+                                      				    '<td>'+data[i].flux.toLocaleString()+'</td>'+
+                                      				      '<td>'+data[i].fee.toLocaleString()+'</td>'+
+                                      				        '<td>'+data[i].cardFee.toLocaleString()+'</td>'+
+                                      				          '<td>'+data[i].totalSale.toLocaleString()+'</td>'+
+                                      				            '<td>'+data[i].note+'</td>'+
+                                      				              '<td>'+hhmmss+'</td>'+
+                                      			 '</tr>';
+                        }else{      //오후
+                                     html2 +=
+                                               '<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
+                                                   '<tr>'+
+                                                        '<td><input class="form-check-input" type="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick="deleteCheck('+data[i].slipNumber+')"></td>'+
+                                                        '<td>'+data[i].carNumber+'</td>'+
+                                                         '<td>'+data[i].flux.toLocaleString()+'</td>'+
+                                                         '<td>'+data[i].fee.toLocaleString()+'</td>'+
+                                                         '<td>'+data[i].cardFee.toLocaleString()+'</td>'+
+                                                         '<td>'+data[i].totalSale.toLocaleString()+'</td>'+
+                                                          '<td>'+data[i].note+'</td>'+
+                                                          '<td>'+hhmmss+'</td>'+
+                                                    '</tr>';
+                        }
+                }
+           }
+             $("#tableMorning").append(html);
+             $("#tableAfternoon").append(html2);
+        }
+    });
+}
+
+//체크 박스 함수
+function deleteCheck(slipNumber){
+
+let boxId= "saleCheckBox"+slipNumber;
+let check=$('input:checkbox[id='+boxId+']').is(":checked") == true
+
+	if(check==true){
+	     slipNumberBox.push(slipNumber);
+	}else{
+		for(let i=0; i<slipNumberBox.length; i++){
+			if(slipNumberBox[i]===slipNumber){
+			    slipNumberBox.splice(i,1);
+			}
+		}
+	}
+}
+//삭제 버튼 클릭 시
+function saleDelete(slipNumber){
+
+	alert("정말 삭제를 진행하시겠습니까?");
+
+				$.ajax({
+					url:"/sale/saleDelete",
+					method:"DELETE",
+					data:{"companyNumber":session,"slipNumber":slipNumberBox},
+					success:function(data){
+					console.log(data);
+						if(data==true){
+							 slipNumberBox.splice(0, slipNumberBox.length);
+                             location.reload();
+						}else{
+							alert("삭제진행 오류가 발생하였습니다. 관리자에게 문의해주십시오.");
+						}
+				    }
+				});
+}

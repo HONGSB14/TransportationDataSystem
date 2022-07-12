@@ -1,15 +1,15 @@
 package tds.service;
 
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import tds.dto.SaleDto;
 import tds.mapper.SaleMapper;
 import tds.vo.SaleVo;
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 @Service
 public class SaleService {
@@ -36,7 +36,7 @@ public class SaleService {
 
         //시간 타입 만들어주기
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
         String todayResistration=sdf.format(date);
 
         SaleVo saleVo = new SaleVo(
@@ -51,17 +51,41 @@ public class SaleService {
                 todayResistration
         );
       boolean result=saleMapper.registration(saleVo);
-        if(result){
+        if(result){ //만야 값이 있다면
             return true;
         }else{
             return false;
         }
     }
 
+    public JSONArray tableView(int companyNumber) {
+        List<SaleVo> list = saleMapper.tableView(companyNumber);
+        JSONArray ja = new JSONArray();
+        for (SaleVo saleVo : list) {
+            JSONObject jo = new JSONObject();
+            jo.put("slipNumber",saleVo.getSlipNumber());
+            jo.put("carNumber", saleVo.getCarNumber());
+            jo.put("flux", saleVo.getFlux());
+            jo.put("fee", saleVo.getFee());
+            jo.put("cardFee", saleVo.getCardFee());
+            jo.put("totalSale", saleVo.getTotalSale());
+            jo.put("note", saleVo.getNote());
+            jo.put("date", saleVo.getDate());
+            ja.put(jo);
+        }
+        if(list !=null){
+            return ja;
+        }else{
+            return null;
+        }
+    }
 
-
-
-
-
-
+    public boolean delete(int companyNumber,List<Integer> slipNumber) {
+        for(int i=0; i<slipNumber.size(); i++){
+            int getSlipNumber=slipNumber.get(i);
+            System.out.println(getSlipNumber);
+            saleMapper.delete(companyNumber,getSlipNumber);
+        }
+        return true;
+    }
 }

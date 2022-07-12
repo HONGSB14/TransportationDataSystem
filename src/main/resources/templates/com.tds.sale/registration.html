@@ -32,7 +32,7 @@
 
             <!-- 매출 삭제 버튼 -->
             <div class="col-md-2 py-2">
-                <button class="form-control" onclick="saleDelete(company_number)">매출 삭제</button>
+                <button class="form-control" onclick="saleDelete()">매출 삭제</button>
             </div>
 
             <!-- 모달 -->
@@ -89,8 +89,22 @@
             </div>
         </div>
     </div>
-</div>
+  <!------------------------------------------- 운송일보 표-------------------------------------------->
+    <!--------------------------------------------------운송일보 오전 ---------------------------------->
+    <div class="col-md-12 text-center py-3">
+         <h3 class="text-center">운송 일보 (오전)</h3>
 
+            <table id="tableMorning" class="table table-center table-bordered table-hover">
+
+            </table>
+    </div>
+   <!--------------------------------------------------운송일보 오후 ---------------------------------->
+       <div class="col-md-12 text-center py-3">
+           <h3 class="text-center">운송 일보 (오후)</h3>
+           <table id="tableAfternoon" class="table table-center table-bordered table-hover">
+
+           </table>
+       </div>
 </div>
     <div th:replace="footer.html :: footer"></div>
     <script src="/js/sale/registration.js"></script>
