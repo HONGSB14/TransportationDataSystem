@@ -90,7 +90,7 @@ function tableDayView(){
                                 }
                             }
            }
-             $("#DaySaleTable").append(html);
+             $("#daySaleTable").append(html);
         }
     });
 }
@@ -110,16 +110,13 @@ function tableMonthView(){
                html="";
                 if(year==yy && month==MM){
                       html+=
-                                     '<tr>'+
                                             '<td>'+data.flux.toLocaleString()+'</td>'+
                                             '<td>'+data.fee.toLocaleString()+'</td>' +
                                             '<td>'+data.cardFee.toLocaleString()+'</td>'+
                                             '<td>'+data.totalSale.toLocaleString()+'</td>'	+
-                                            '<td colspan="2">'+pay.toLocaleString()+'</td>'+
-                                    '</tr>';
-
+                                            '<td colspan="2">'+pay.toLocaleString()+'</td>';
                 }
-                $("#MonthSaleTable").append(html);
+                $("#monthSaleTable").append(html);
         }
     });
 }
