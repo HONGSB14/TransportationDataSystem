@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="tds.mapper.SaleMapper">
+
     <insert id="registration">
             INSERT INTO springproject.slip values(#{companyNumber},#{slipNumber},#{carNumber},#{flux},#{fee},#{cardFee},#{totalSale},#{note},#{date,jdbcType=TIMESTAMP})
     </insert>
@@ -11,6 +12,31 @@
     <insert id="registrationDate">
         INSERT INTO springproject.slip values(#{companyNumber},#{slipNumber},#{carNumber},#{flux},#{fee},#{cardFee},#{totalSale},#{note},#{date})
     </insert>
+
+    <select id="mainDayTableView"  resultType="tds.vo.SaleVo">
+        SELECT
+        company_number,SUM(flux) AS flux,SUM(fee) AS fee ,SUM(card_Fee) AS card_fee,SUM(total_sale) AS total_sale,DATE_FORMAT(date,'%Y-%m-%d') AS date
+        FROM springproject.slip
+        WHERE company_number=#{companyNumber}
+        GROUP BY DATE_FORMAT(date,'%Y-%m-%d')
+        ORDER BY DATE_FORMAT(date,'%Y-%m-%d') ASC
+    </select>
+
+    <select id="mainMonthTableView"  resultType="tds.vo.SaleVo">
+       SELECT company_number,SUM(flux) AS flux,SUM(fee) AS fee ,SUM(card_Fee) AS card_fee,SUM(total_sale) AS total_sale,DATE_FORMAT(date,'%Y-%m') AS date
+        FROM springproject.slip
+        WHERE company_number=#{companyNumber}
+        GROUP BY date_format(date,'%Y-%m')
+        ORDER BY date_format(date,'%Y-%m') ASC
+    </select>
+
+    <select id="mainYearTableView"  resultType="tds.vo.SaleVo">
+        SELECT   company_number,SUM(flux) AS flux,SUM(fee) AS fee ,SUM(card_Fee) AS card_fee,SUM(total_sale) AS total_sale,DATE_FORMAT(date,'%Y') AS date
+        FROM springproject.slip
+        WHERE company_number=#{companyNumber}
+        GROUP BY date_format(date,'%Y')
+        ORDER BY date_format(date,'%Y') ASC
+    </select>
 
     <select id="tableView" resultType="tds.vo.SaleVo">
         SELECT slip_number,car_number,flux,fee,card_fee,total_sale,note,date FROM springproject.slip WHERE company_number=#{companyNumber}
@@ -24,5 +50,8 @@
             DELETE FROM springproject.slip WHERE company_number=#{companyNumber} and slip_number=#{slipNumber}
     </delete>
 
+    <update id="update">
+        UPDATE springproject.slip SET car_number=#{carNumber} , flux=#{flux}, fee=#{fee} ,total_sale=#{totalSale} ,note=#{note} WHERE company_number=#{companyNumber} and slip_number=#{slipNumber}
+    </update>
 
 </mapper>

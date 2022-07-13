@@ -19,6 +19,7 @@ public class SaleController {
 
     @Autowired
     private SaleService saleService;
+
     @GetMapping("/getSession")
     public Map<String,Object> getSession(HttpServletRequest request){
         Map<String,Object> map= new HashMap<>();
@@ -45,12 +46,29 @@ public class SaleController {
 
     }
 
-    @DeleteMapping ("/saleDelete")
-    public boolean saleDelete(@RequestParam("companyNumber") int companyNumber , @RequestParam( value="slipNumber[]") List<Integer> slipNumber){
-        return saleService.delete(companyNumber,slipNumber);
-
+    @GetMapping("/mainDayTableView")
+    public void mainDayTableView(@RequestParam("companyNumber") int companyNumber, HttpServletResponse response){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(saleService.mainDayTableView(companyNumber));
+        }catch(Exception e){
+            System.out.println("json err  mainDayTableView check !!"+e);
+        }
     }
 
+    @GetMapping("/mainMonthTableView")
+    public void mainMonthTableView(@RequestParam("companyNumber")int companyNumber,HttpServletResponse response){
+        System.out.println(companyNumber);
+        try {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json");
+                response.getWriter().print(saleService.mainMonthTableView(companyNumber));
+        }catch(Exception e){
+               System.out.println("json err  mainMonthTableView check !!"+e);
+        }
+
+    }
     @GetMapping("/getDate")
     public Map<String,Object> getDate(HttpServletRequest request){
         String searchDate=(String)request.getSession().getAttribute("searchDate");
@@ -75,5 +93,28 @@ public class SaleController {
     public boolean registrationDate(@RequestParam("slipForm") String slipForm) {
         return saleService.registrationDate(slipForm);
     }
+
+
+    @DeleteMapping ("/saleDelete")
+    public boolean saleDelete(@RequestParam("companyNumber") int companyNumber , @RequestParam( value="slipNumber[]") List<Integer> slipNumber){
+        return saleService.delete(companyNumber,slipNumber);
+
+    }
+    @PutMapping("/update")
+    public boolean update(@RequestParam("slipNumber")int slipNumber,
+                                                @RequestParam("companyNumber")int companyNumber,
+                                                @RequestParam("date") String date,
+                                                @RequestParam("carNumber") String carNumber,
+                                                @RequestParam("fee") int fee,
+                                                @RequestParam("cardFee") int cardFee,
+                                                @RequestParam("note")String note,
+                                                @RequestParam("flux") int flux,
+                                                @RequestParam("totalSale") int totalSale) {
+
+        SaleDto saleDto = new SaleDto(companyNumber,slipNumber,carNumber,flux,fee,cardFee,totalSale,note,date);
+        System.out.println(saleDto);
+        return  saleService.update(saleDto);
+    }
+
 
 }

@@ -58,6 +58,45 @@ public class SaleService {
         }
     }
 
+    public JSONArray mainDayTableView(int companyNumber){
+        List<SaleVo> list =saleMapper.mainDayTableView(companyNumber);
+
+        JSONArray ja =new JSONArray();
+        for(SaleVo saleVo : list){
+            JSONObject jo = new JSONObject();
+            jo.put("companyNumber",saleVo.getCompanyNumber());
+            jo.put("flux",saleVo.getFlux());
+            jo.put("fee",saleVo.getFee());
+            jo.put("cardFee",saleVo.getCardFee());
+            jo.put("totalSale",saleVo.getTotalSale());
+            jo.put("date",saleVo.getDate());
+            ja.put(jo);
+        }
+
+        if(list !=null){
+            return ja;
+        }else{
+            return null;
+        }
+    }
+    public JSONObject mainMonthTableView (int companyNumber){
+             List<SaleVo> list = saleMapper.mainMonthTableView(companyNumber);
+             System.out.println(list);
+            JSONObject jo = new JSONObject();
+            for(SaleVo saleVo : list){
+                jo.put("companyNumber",saleVo.getCompanyNumber());
+                jo.put("flux",saleVo.getFlux());
+                jo.put("fee",saleVo.getFee());
+                jo.put("cardFee",saleVo.getFee());
+                jo.put("totalSale",saleVo.getTotalSale());
+                jo.put("date",saleVo.getDate());
+            }
+            if(list !=null){
+                return jo;
+            }else{
+                return null;
+            }
+    }
     public JSONArray tableView(int companyNumber) {
         List<SaleVo> list = saleMapper.tableView(companyNumber);
         JSONArray ja = new JSONArray();
@@ -140,5 +179,22 @@ public class SaleService {
         }else{
             return false;
         }
+    }
+
+    public boolean update(SaleDto saleDto){
+
+        SaleVo saleVo = new SaleVo(
+                saleDto.getCompanyNumber(),
+                saleDto.getSlipNumber(),
+                saleDto.getCarNumber(),
+                saleDto.getFlux(),
+                saleDto.getFee(),
+                saleDto.getCardFee(),
+                saleDto.getTotalSale(),
+                saleDto.getNote(),
+                saleDto.getDate()
+        );
+        return saleMapper.update(saleVo);
+
     }
 }

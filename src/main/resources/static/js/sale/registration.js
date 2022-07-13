@@ -245,7 +245,6 @@ function tableView(){
     $.ajax({
         url:"/sale/tableView",
         data:{"companyNumber":session},
-        async:true,
         success: function(data){
                let html="";
                 let html2="";
@@ -256,7 +255,7 @@ function tableView(){
                         let hh=hhmmss.slice(0,2);
                    if(today==yyMMdd){
                         if(hh<12){  //오전
-                               html +=    '<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
+                               html +=
                                       				'<tr>'+
                                       				'<td><input class="form-check-input" type="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick="deleteCheck('+data[i].slipNumber+')"></td>'+
                                       				  '<td>'+data[i].carNumber+'</td>'+
@@ -269,7 +268,7 @@ function tableView(){
                                       			 '</tr>';
                         }else{      //오후
                                      html2 +=
-                                                   '<tr class="table-info"><th>선택</th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>기입 시간</th></tr>'+
+
                                                    '<tr>'+
                                                         '<td><input class="form-check-input" type="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick="deleteCheck('+data[i].slipNumber+')"></td>'+
                                                         '<td>'+data[i].carNumber+'</td>'+
@@ -306,8 +305,8 @@ let check=$('input:checkbox[id='+boxId+']').is(":checked") == true
 	}
 }
 //삭제 버튼 클릭 시
-function saleDelete(slipNumber){
-
+function saleDelete(){
+    console.log(slipNumberBox);
 	let window=confirm("정말 삭제를 진행하시겠습니까?");
     if(window){
     		$.ajax({
@@ -331,7 +330,7 @@ function saleDelete(slipNumber){
 }
 
 
-function dateSearch(){
+function dateRegistrationSearch(){
      let searchDate=$("#date").val();
      location.href="/page/sale/searchRegistration/"+searchDate;
 }

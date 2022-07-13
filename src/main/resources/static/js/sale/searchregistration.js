@@ -35,6 +35,7 @@ let yesterday=year+"-"+month+"-"+dateOne;
 let pass=[false,false,false,false];
 //삭제 및 수정 배열 담기
 let slipNumberBox=[];
+let updateNumberBox=[];
 let uFlux=[];
 let uFee=[];
 let uCardFee=[];
@@ -249,30 +250,118 @@ function tableView(){
                 url:"/sale/dateSearchTable",
                 data:{"searchDate":searchDate,"companyNumber":session},
                 success: function(data){
-                        console.log(data);
                         let html="";
-                        if(data!=""){ //검색한 날짜가 존재한다면
                             for(let i=0; i<data.length; i++){
                                 let searchDay=data[i].date;
                                 let yyMMdd=searchDay.split(" ")[0];
-                                html += '<tr class="table-info"><th></th><th>차 번호</th><th>유량(L)</th><th>실입금액(원)</th><th>카드수입(원)</th><th>일 매출(원)</th><th>비고</th><th>날짜</th></tr>'+
+                                html +=
                                               '<tr onclick="updateClick('+data[i].slipNumber+')">'+
-                                              		'<td><input class="form-check-input" type="checkbox" value="checkbox" name="saleCheckBox" id="saleCheckBox" onclick="check('+data[i].slipNumber+')"></td>'+
-                                              		'<td><input class="form-control" type="text" value="'+data[i].carNumber+'" name="carNumber" id="carNumber2'+i+'"></td>'+
-                                              		'<td><input class="form-control" type="text" value="'+data[i].flux+'" name="flux" id="flux2'+i+'"></td>'	+
-                                              		'<td><input class="form-control" type="text" value="'+data[i].fee+'" name="fee" id="fee2'+i+'"></td>'+
-                                              		'<td><input class="form-control" type="text" value="'+data[i].cardFee+'" name="cardFee" id="cardFee2'+i+'"></td>'+
-                                              		'<td><input class="form-control" type="text" value="'+data[i].totalSale+'" name="totalSale" id="totalSale2'+i+'"></td>'+
-                                              		'<td><input class="form-control" type="text" value="'+data[i].note+'" name="note" id="note2'+i+'"></td>'+
-                                              		'<td><input class="form-control text-center" type="text" value="'+yyMMdd+'" name="date" id="date2" disabled="disabled"></td>'+
+                                              		'<td><input class="form-check-input" type="checkbox" value="checkbox" name="saleCheckBox" id="saleCheckBox'+data[i].slipNumber +'" onclick=" deleteCheck('+data[i].slipNumber+')"></td>'+
+                                              		'<td><input class="form-control" type="text" value="'+data[i].carNumber+'" name="uCarNumber" id="uCarNumber'+i+'"></td>'+
+                                              		'<td><input class="form-control" type="text" value="'+data[i].flux+'" name="uFlux" id="uFlux'+i+'"></td>'	+
+                                              		'<td><input class="form-control" type="text" value="'+data[i].fee+'" name="uFee" id="uFee'+i+'"></td>'+
+                                              		'<td><input class="form-control" type="text" value="'+data[i].cardFee+'" name="uCardFee" id="uCardFee'+i+'"></td>'+
+                                              		'<td><input class="form-control" type="text" value="'+data[i].totalSale+'" name="uTotalSale" id="uTotalSale'+i+'"></td>'+
+                                              		'<td><input class="form-control" type="text" value="'+data[i].note+'" name="uNote" id="uNote'+i+'"></td>'+
+                                              		'<td><input class="form-control text-center" type="text" value="'+yyMMdd+'" name="uDate" id="uDate" disabled="disabled"></td>'+
                                              '</tr>';
-                                             i++;
+
                             }
                              $("#searchTable").append(html);
-                        }else{      //존재하지않는다면
-                             $("#searchCheck").html("<h1>현재 검색하신 날짜는 매출이 존재하지 않습니다!</H1>");
                         }
-                }
-
         });
+}
+
+
+//체크 박스 함수
+function deleteCheck(slipNumber){
+
+let boxId= "saleCheckBox"+slipNumber;
+let check=$('input:checkbox[id='+boxId+']').is(":checked") == true
+
+	if(check==true){
+	     slipNumberBox.push(slipNumber);
+	}else{
+		for(let i=0; i<slipNumberBox.length; i++){
+			if(slipNumberBox[i]===slipNumber){
+			    slipNumberBox.splice(i,1);
+			}
+		}
+	}
+}
+//삭제 버튼 클릭 시
+function saleDelete(){
+
+	let window=confirm("정말 삭제를 진행하시겠습니까?");
+    if(window){
+    		$.ajax({
+    					url:"/sale/saleDelete",
+    					method:"DELETE",
+    					data:{"companyNumber":session,"slipNumber":slipNumberBox},
+    					success:function(data){
+    					console.log(data);
+    						if(data==true){
+    							 slipNumberBox.splice(0, slipNumberBox.length);
+                                 location.reload();
+    						}else{
+    							alert("삭제진행 오류가 발생하였습니다. 관리자에게 문의해주십시오.");
+    						}
+    				    }
+    			});
+    }else{
+        return;
+    }
+
+}
+//검색버튼 클릭 시
+function dateRegistrationSearch(){
+     let searchDate=$("#date").val();
+     location.href="/page/sale/searchRegistration/"+searchDate;
+}
+
+//업데이트 버튼
+function saleUpdate(){
+
+	for(let i=0; i<updateNumberBox.length; i++){
+
+		uCarNumber.push( $("#uCarNumber"+i).val() );
+		uFlux.push( $("#uFlux"+i).val() );
+		uFee.push( $("#uFee"+i).val() );
+		uCardFee.push( $("#uCardFee"+i).val() );
+		uTotalSale.push( $("#uTotalSale"+i).val() );
+		uNote.push( $("#uNote"+i).val() );
+
+	}
+	let uDate=$("#uDate").val();
+        console.log(uCarNumber);
+        console.log(uFlux);
+        console.log(uFee);
+        console.log(uCardFee);
+        console.log(uTotalSale);
+        console.log(uNote);
+		for(let i=0; i<updateNumberBox.length; i++){
+
+		$.ajax({
+				url:"/sale/update",
+				method:"PUT",
+				data:{"slipNumber":updateNumberBox[i],"companyNumber":session,"date":uDate,"carNumber":uCarNumber[i],"fee":uFee[i],"cardFee":uCardFee[i],"note":uNote[i],"flux":uFlux[i],"totalSale":uTotalSale[i]},
+				async:false,
+				success:function(data){
+					if(data==true){
+						updateNumberBox.splice(0,updateNumberBox.length);
+					}else{
+						alert("수정진행 오류가 발생하였습니다. 관리자에게 문의해주십시오.");
+					}
+				}
+			});
+		}
+		     alert("선택하신 항목이 수정 완료되었습니다.");
+			slipNumberBox.splice(0,slipNumberBox.length);
+			//location.reload();
+}
+
+//클릭 시 pk 번호 가져오기
+function updateClick(slipNumber){
+	updateNumberBox.push(slipNumber);
+
 }

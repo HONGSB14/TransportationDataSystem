@@ -90,8 +90,14 @@ public class PagingController {
     }
 
     @GetMapping("/sale/searchRegistration/{searchDate}")
-    public String saleSearch(@PathVariable("searchDate") String searchDate ,HttpServletRequest request){
+    public String searchRegistration(@PathVariable("searchDate") String searchDate ,HttpServletRequest request){
         request.getSession().setAttribute("searchDate",searchDate);
         return "com.tds.sale/searchregistration";
     }
+    @GetMapping("/sale/searchSale/{searchDate}")
+    public String saleSearch(@PathVariable("searchDate") String searchDate ,HttpServletRequest request){
+        request.getSession().setAttribute("searchDate",searchDate);
+        return "com.tds.sale/searchsale";
+    }
+
 }

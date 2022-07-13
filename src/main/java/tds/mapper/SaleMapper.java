@@ -14,9 +14,16 @@ public interface SaleMapper {
 
    List<SaleVo> tableView(int companyNumber);
 
+   List<SaleVo> mainDayTableView(int companyNumber);
+
+   List<SaleVo> mainMonthTableView(int companyNumber);
+
   boolean delete(int companyNumber,int slipNumber);
 
   List<SaleVo> dateSearchTable(String searchDate,int companyNumber);
 
-    boolean registrationDate(SaleVo saleVo);
+  boolean registrationDate(SaleVo saleVo);
+
+  boolean update(SaleVo saleVo);
+
 }
