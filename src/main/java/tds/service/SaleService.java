@@ -81,7 +81,6 @@ public class SaleService {
     }
     public JSONObject mainMonthTableView (int companyNumber){
              List<SaleVo> list = saleMapper.mainMonthTableView(companyNumber);
-             System.out.println(list);
             JSONObject jo = new JSONObject();
             for(SaleVo saleVo : list){
                 jo.put("companyNumber",saleVo.getCompanyNumber());

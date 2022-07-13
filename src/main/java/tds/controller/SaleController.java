@@ -59,7 +59,7 @@ public class SaleController {
 
     @GetMapping("/mainMonthTableView")
     public void mainMonthTableView(@RequestParam("companyNumber")int companyNumber,HttpServletResponse response){
-        System.out.println(companyNumber);
+
         try {
                 response.setCharacterEncoding("UTF-8");
                 response.setContentType("application/json");
@@ -112,7 +112,6 @@ public class SaleController {
                                                 @RequestParam("totalSale") int totalSale) {
 
         SaleDto saleDto = new SaleDto(companyNumber,slipNumber,carNumber,flux,fee,cardFee,totalSale,note,date);
-        System.out.println(saleDto);
         return  saleService.update(saleDto);
     }
 
