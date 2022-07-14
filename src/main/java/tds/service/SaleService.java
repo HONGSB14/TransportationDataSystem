@@ -72,7 +72,6 @@ public class SaleService {
             jo.put("date",saleVo.getDate());
             ja.put(jo);
         }
-
         if(list !=null){
             return ja;
         }else{
@@ -90,6 +89,7 @@ public class SaleService {
                 jo.put("totalSale",saleVo.getTotalSale());
                 jo.put("date",saleVo.getDate());
             }
+
             if(list !=null){
                 return jo;
             }else{
@@ -196,4 +196,23 @@ public class SaleService {
         return saleMapper.update(saleVo);
 
     }
+    String date="";
+    public JSONArray lineChart(int companyNumber){
+        List<SaleVo> list =saleMapper.lineChart(companyNumber);
+        ArrayList<SaleDto> SaleDtoList= new ArrayList<>();
+        Date d = new Date();
+        SimpleDateFormat  sdf = new SimpleDateFormat("yy-MM");
+        String yyMM=sdf.format(d);
+        for(int i=1; i<32; i++) {
+            if(i<10){
+                 date="0"+i;
+            }else{
+                date=String.valueOf(i);
+            }
+            SaleDto saleDto = new SaleDto(companyNumber, 0, null, 0, 0, 0, 0, null,yyMM+date);
+            System.out.println(saleDto);
+        }
+        return null;
+    }
+
 }

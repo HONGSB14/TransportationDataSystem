@@ -210,12 +210,9 @@ function saleCheck(){
     	            console.log(data);
     	            if(data==true){
     	                  $("#registrationCheck2").html("");
-                          $("#registrationCheck").html("등록되었습니다.");
                           location.reload();
     	                  valuesClear();
-
     	            }else{
-    	                 $("#registrationCheck").html("");
                          $("#registrationCheck2").html("등록하신 차량번호를 다시한번 확인해주십시오.");
     	            }
     	        }

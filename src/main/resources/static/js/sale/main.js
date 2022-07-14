@@ -27,13 +27,26 @@
     let beforeDate=beforeYear+"-01-01";
     //현날짜에서 하루 전 까지 검색
      let d = new Date();
-     let sel_day = -1;
-     d.setDate(d.getDate() + sel_day );
+     let sel_dmy = -1;
+     d.setDate(d.getDate() + sel_dmy);
      let dateOne= ('0' + d.getDate()).slice(-2);
      let yesterday=year+"-"+month+"-"+dateOne;
+     //현 날짜에서 한달 전 까지 검색
+     d.setMonth(d.getMonth() + sel_dmy );
+     let  lastMonth   = ('0' + (d.getMonth() +  1 )).slice(-2);
+     //현날짜에서  작년 구하기
+     d.setFullYear(d.getFullYear() + sel_dmy );
+     let lastYear=d.getFullYear();
      //매출 리스트 담기 용 배열
+       //week
        let saleList =[];
        let saleDate=[];
+       //month
+       let lastMonthList=[];
+       let lastMonthDate=[];
+       let todayMonthList=[];
+       let todayMonthDate=[];
+        //year
 tableDayView();
 tableMonthView();
 $(function() {
@@ -53,16 +66,16 @@ $(function() {
     google.charts.setOnLoadCallback(weekChart);
     google.charts.setOnLoadCallback(monthChart);
 //  google.charts.setOnLoadCallback(yearChart);
-    weekChart();
-    monthChart();
+
 
 });
-
- function weekChart() {
+    ////weekChart (pie)
+     function weekChart() {
 
               $.ajax({
                     url:"/sale/mainDayTableView",
                     data:{"companyNumber":session},
+                    async:false,
                     success: function(data){
                             for(let j=0; j<data.length; j++){
                                     let yyMMdd=data[j].date;
@@ -70,7 +83,10 @@ $(function() {
                                     let MM=yyMMdd.split("-")[1];
                                     let dd=yyMMdd.split("-")[2];
                                     let realDay=day-dd;
-                                    if(realDay>=0 && realDay<7 && year==yy && month==MM){
+                                    let weekDay=-24;
+
+                                    if(realDay>=0 && realDay<7 && year==yy && month==MM && realDay>weekDay){
+
                                                 saleList.push(data[j].totalSale);
                                                 saleDate.push(data[j].date);
                                     }
@@ -100,14 +116,18 @@ $(function() {
 	      var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
 	      chart.draw(data, options);
 
+
 	}
 
-    //MonthChart (line)
+    ////MonthChart (line)
     function monthChart() {
 
-
+                //비교날짜 선언
+                 let yearLastMonth=year+"-"+lastMonth;
+                 let yearMonth=year+"-"+month;
                        $.ajax({
                                url:"/sale/mainDayTableView",
+                               async: false,
                                data:{"companyNumber":session},
                                success: function(data){
                                          for(let i=0; i<data.length; i++){
@@ -115,7 +135,16 @@ $(function() {
                                                 let yy=yyMMdd.split("-")[0];
                                                 let MM=yyMMdd.split("-")[1];
                                                 let dd=yyMMdd.split("-")[2];
-                                            console.log(data);
+                                                let YM=yy+"-"+MM;
+                                                if(YM==yearLastMonth){      //데이터가 저번달날짜와 같다면
+                                                    lastMonthDate.push(data[i].date);             //비교된 날짜 배열에 담기
+                                                    lastMonthList.push(data[i].totalSale);       //비교된 날짜 매출 배열에 담기
+                                                }
+                                                if(YM==yearMonth){      //데이터가 현재 날짜와 같다면
+                                                    todayMonthDate.push(data[i].date);           //비교된 날짜 배열에 담기
+                                                    todayMonthList.push(data[i].totalSale);     //비교된 날짜 매출 배열에 담기
+                                                }
+
                                    }
                                }
                         });
@@ -123,24 +152,25 @@ $(function() {
                 	     var data = new google.visualization.DataTable();
 
                 	     data.addColumn('string', 'yearDate');
-                	   	 data.addColumn('number' , ''+month+'');
-                	   	 date.addColumn('number',''+(month-1)+'')
+                	     data.addColumn('number',month+'월 ');
+                	   	 data.addColumn('number' ,lastMonth+'월 ');
 
-                	     let dataRow=[];
+                	    let dataRow=[];
 
-                	     for(let i=0; i<32; i++){
+                	    for(let i=0; i<todayMonthDate.length; i++) {
 
-                			let monthSale=$("#monthSale"+i).val();
-                			let sale=parseInt(monthSale);
-                			let monthDate=$("#monthDate"+i).val();
+                	          let dateDay=todayMonthDate[i].split("-")[2];      //일별
+                              dataRow=[dateDay+"",todayMonthList[i],lastMonthList[i]];
+                              data.addRow(dataRow);
+                		}
+                		 for(let i=0; i<lastMonthDate.length; i++) {
 
-                			dataRow=[monthDate,sale];
-                			data.addRow(dataRow);
-                		 }
+                        }
 
                 	      // Set chart options
                 	      var options = {'title':'',
-                	                       'width':1900,
+                                            'left':0,
+                	                       'width':1850,
                 	                       'height':900};
 
                 	      // Instantiate and draw our chart, passing in some options.

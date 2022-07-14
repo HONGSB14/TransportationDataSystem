@@ -1,12 +1,11 @@
 package tds.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tds.dto.CompanyDto;
 import tds.service.CompanyService;
-import tds.vo.CompanyVo;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -1,6 +1,5 @@
 package tds.controller;
 
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tds.dto.SaleDto;
@@ -8,7 +7,6 @@ import tds.service.SaleService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,5 +113,15 @@ public class SaleController {
         return  saleService.update(saleDto);
     }
 
+    @GetMapping("/lineChart")
+    public void lineChart(@RequestParam("companyNumber") int companyNumber, HttpServletResponse response){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(saleService.mainDayTableView(companyNumber));
+        }catch(Exception e){
+            System.out.println("json err  mainDayTableView check !!"+e);
+        }
+    }
 
 }

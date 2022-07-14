@@ -26,4 +26,6 @@ public interface SaleMapper {
 
   boolean update(SaleVo saleVo);
 
+  List<SaleVo> lineChart(int companyNumber);
+
 }

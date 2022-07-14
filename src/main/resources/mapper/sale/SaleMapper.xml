@@ -46,6 +46,15 @@
         SELECT slip_number,car_number,flux,fee,card_fee,total_sale,note,date FROM springproject.slip WHERE company_number=#{companyNumber} and DATE(date)=#{searchDate}
     </select>
 
+    <select id="lineChart"  resultType="tds.vo.SaleVo">
+        SELECT
+        company_number,SUM(flux) AS flux,SUM(fee) AS fee ,SUM(card_Fee) AS card_fee,SUM(total_sale) AS total_sale,DATE_FORMAT(date,'%Y-%m-%d') AS date
+        FROM springproject.slip
+        WHERE company_number=#{companyNumber}
+        GROUP BY DATE_FORMAT(date,'%Y-%m-%d')
+        ORDER BY DATE_FORMAT(date,'%Y-%m-%d') ASC
+    </select>
+
     <delete id="delete">
             DELETE FROM springproject.slip WHERE company_number=#{companyNumber} and slip_number=#{slipNumber}
     </delete>
