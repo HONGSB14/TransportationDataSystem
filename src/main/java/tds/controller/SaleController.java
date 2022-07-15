@@ -115,13 +115,27 @@ public class SaleController {
 
     @GetMapping("/lineChart")
     public void lineChart(@RequestParam("companyNumber") int companyNumber, HttpServletResponse response){
+
         try {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
-            response.getWriter().print(saleService.mainDayTableView(companyNumber));
+            response.getWriter().print(saleService.lineChart(companyNumber));
         }catch(Exception e){
             System.out.println("json err  mainDayTableView check !!"+e);
         }
+    }
+
+    @GetMapping("/barChart")
+    public void barChart(@RequestParam("companyNumber")int companyNumber,HttpServletResponse response){
+
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(saleService.barChart(companyNumber));
+        }catch(Exception e){
+            System.out.println("json err  mainMonthTableView check !!"+e);
+        }
+
     }
 
 }

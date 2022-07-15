@@ -28,4 +28,6 @@ public interface SaleMapper {
 
   List<SaleVo> lineChart(int companyNumber);
 
+  List<SaleVo> barChart(int companyNumber);
+
 }

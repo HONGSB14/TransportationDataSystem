@@ -55,6 +55,14 @@
         ORDER BY DATE_FORMAT(date,'%Y-%m-%d') ASC
     </select>
 
+    <select id="barChart"  resultType="tds.vo.SaleVo">
+        SELECT company_number,SUM(flux) AS flux,SUM(fee) AS fee ,SUM(card_Fee) AS card_fee,SUM(total_sale) AS total_sale,DATE_FORMAT(date,'%Y-%m') AS date
+        FROM springproject.slip
+        WHERE company_number=#{companyNumber}
+        GROUP BY date_format(date,'%Y-%m')
+        ORDER BY date_format(date,'%Y-%m') ASC
+    </select>
+
     <delete id="delete">
             DELETE FROM springproject.slip WHERE company_number=#{companyNumber} and slip_number=#{slipNumber}
     </delete>

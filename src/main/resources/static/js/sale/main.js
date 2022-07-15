@@ -47,6 +47,8 @@
        let todayMonthList=[];
        let todayMonthDate=[];
         //year
+        let todayYearList=[];
+        let todayYearDate=[];
 tableDayView();
 tableMonthView();
 $(function() {
@@ -65,7 +67,7 @@ $(function() {
    // 인자로 전달된 콜백함수를 내부적으로 호출하여 차트를 그리는 메소드
     google.charts.setOnLoadCallback(weekChart);
     google.charts.setOnLoadCallback(monthChart);
-//  google.charts.setOnLoadCallback(yearChart);
+    google.charts.setOnLoadCallback(yearChart);
 
 
 });
@@ -126,16 +128,18 @@ $(function() {
                  let yearLastMonth=year+"-"+lastMonth;
                  let yearMonth=year+"-"+month;
                        $.ajax({
-                               url:"/sale/mainDayTableView",
+                               url:"/sale/lineChart",
                                async: false,
                                data:{"companyNumber":session},
                                success: function(data){
+                                            console.log(data);
                                          for(let i=0; i<data.length; i++){
                                                 let yyMMdd=data[i].date;
                                                 let yy=yyMMdd.split("-")[0];
                                                 let MM=yyMMdd.split("-")[1];
                                                 let dd=yyMMdd.split("-")[2];
                                                 let YM=yy+"-"+MM;
+
                                                 if(YM==yearLastMonth){      //데이터가 저번달날짜와 같다면
                                                     lastMonthDate.push(data[i].date);             //비교된 날짜 배열에 담기
                                                     lastMonthList.push(data[i].totalSale);       //비교된 날짜 매출 배열에 담기
@@ -150,7 +154,7 @@ $(function() {
                         });
                 	     // Create the data table.
                 	     var data = new google.visualization.DataTable();
-
+                        //이부분때문에 매출기준이 날짜는 고정이고 매출액은 달라서 다르게나와요..
                 	     data.addColumn('string', 'yearDate');
                 	     data.addColumn('number',month+'월 ');
                 	   	 data.addColumn('number' ,lastMonth+'월 ');
@@ -163,9 +167,7 @@ $(function() {
                               dataRow=[dateDay+"",todayMonthList[i],lastMonthList[i]];
                               data.addRow(dataRow);
                 		}
-                		 for(let i=0; i<lastMonthDate.length; i++) {
 
-                        }
 
                 	      // Set chart options
                 	      var options = {'title':'',
@@ -179,10 +181,52 @@ $(function() {
 
     }
 
+    //yearChart (bar)
+     function yearChart() {
 
-function abc(){
-console.log(1);
-}
+                $.ajax({
+                     url:"/sale/barChart",
+                      data:{"companyNumber":session},
+                     async:false,
+                     success: function(data){
+
+                            for(let i=0; i<data.length; i++){
+
+                                      let yyMMdd=data[i].date;
+                                      let yy=yyMMdd.split("-")[0];
+                                      let MM=yyMMdd.split("-")[1];
+                                       if(year==yy){
+                                            todayYearList.push(data[i].totalSale);
+                                            todayYearDate.push(data[i].date.split("-")[1]);
+                                       }
+                             }
+                     }
+                 });
+
+              // Create the data table.
+              var data = new google.visualization.DataTable();
+
+              data.addColumn('string', 'year');
+               data.addColumn('number',year);
+
+               let dataRow=[];
+
+                for(let i=0; i<12; i++){
+                    let yearDate=todayYearDate[i];
+                    dataRow=[yearDate,parseInt(todayYearList[i])];
+                    data.addRow(dataRow);
+                }
+                 // Set chart options
+                var options = {'title':'',
+                             'left':0,
+                	         'width':1850,
+                	         'height':900};
+
+                // Instantiate and draw our chart, passing in some options.
+                var chart = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
+                chart.draw(data, options);
+     }
+
 
 //검색버튼 클릭 시
 function dateSearch(){
