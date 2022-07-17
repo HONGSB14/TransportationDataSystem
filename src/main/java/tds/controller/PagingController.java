@@ -100,4 +100,22 @@ public class PagingController {
         return "com.tds.sale/searchsale";
     }
 
+    //////////////////////////////////////////DATAINFO  PAGE ///////////////////////////////////////////////
+
+    @GetMapping("/data/dataInfo")
+    public String dataInfo(){
+        return "com.tds.data/datainfo";
+    }
+
+    ////////////////////////////////////////////////CAR PAGE///////////////////////////////////////////////////////
+
+    @GetMapping("/car/carRegistration")
+    public String carRegistration(){
+        return "com.tds.car/carregistration";
+    }
+    @GetMapping("car/carList")
+    public String carList(){
+        return "com.tds.car/carlist";
+    }
+
 }

@@ -24,7 +24,7 @@
             <a sec:authorize="isAnonymous()"  class="headerinfo" href="/page/member/agreement">회원가입</a>
             <a sec:authorize="hasRole('ADMIN')" class="headerinfo"  href="#">관리자 모드|</a>
             <a sec:authorize="isAuthenticated()"   class="headerinfo" href="/page/productInfo">제품소개 | </a>
-            <a sec:authorize="isAuthenticated()"   class="headerinfo" href="#">매출 데이터 보기 |</a>
+            <a sec:authorize="isAuthenticated()"   class="headerinfo" href="/page/data/dataInfo">매출 데이터 보기 |</a>
             <a sec:authorize="isAuthenticated()"   class="headerinfo" href="/page/sale/mainSaleTable">매출등록하기 |</a>
             <a sec:authorize="isAuthenticated()"   class="headerinfo" href="/member/logout">로그아웃 </a>
         </div>

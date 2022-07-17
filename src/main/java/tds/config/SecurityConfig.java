@@ -43,36 +43,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //회사 가입 성공 시
                 .ignoringAntMatchers("/company/info")
-
                  //회원 가입 시
                 .ignoringAntMatchers("/page/member/signup")
                 .ignoringAntMatchers("/company/findNumber")
                 .ignoringAntMatchers("/member/signupController")
                 .ignoringAntMatchers("/member/signup")
-
                 //회원 가입 성공 시
                 .ignoringAntMatchers("/page/member/signupsuccess")
-
                 // 로그인 시
                 .ignoringAntMatchers("/page/member/login")
                 .ignoringAntMatchers("/member/loginController")
                 .ignoringAntMatchers("/member/loginSession")
-
                 //아이디 찾기 시
                 .ignoringAntMatchers("/member/findId")
                 .ignoringAntMatchers("/member/findIdSuccess")
-
                 //비밀번호 찾기 시
                 .ignoringAntMatchers("/member/findPassword")
-
                 //비밀번호 변경 시
                 .ignoringAntMatchers("/page/member/findPassword")
                 .ignoringAntMatchers("/member/passwordUpdate")
-
                 //매출 데이터 삭제 시
                 .ignoringAntMatchers("/sale/saleDelete")
                 //매출 수정 시
-                .ignoringAntMatchers("/sale/update");
+                .ignoringAntMatchers("/sale/update")
+                //차량 등록 시
+                .ignoringAntMatchers("/car/carRegistration")
+                .ignoringAntMatchers("/car/getApproveCarId");
     }
     @Autowired
     private MemberService  memberService;

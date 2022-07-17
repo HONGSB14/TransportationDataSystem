@@ -207,7 +207,7 @@ $(function() {
               var data = new google.visualization.DataTable();
 
               data.addColumn('string', 'year');
-               data.addColumn('number',year);
+               data.addColumn('number','월 매출');
 
                let dataRow=[];
 
