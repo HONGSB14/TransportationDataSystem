@@ -68,7 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/sale/update")
                 //차량 등록 시
                 .ignoringAntMatchers("/car/carRegistration")
-                .ignoringAntMatchers("/car/getApproveCarId");
+                .ignoringAntMatchers("/car/getApproveCarId")
+                //차량 리스트
+                .ignoringAntMatchers("/car/getCarList");
     }
     @Autowired
     private MemberService  memberService;

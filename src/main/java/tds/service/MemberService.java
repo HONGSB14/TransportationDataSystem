@@ -26,15 +26,13 @@ import java.util.*;
 @Service
 public class MemberService implements UserDetailsService {
 
-
     @Autowired
     private MemberMapper memberMapper;
-
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private JavaMailSender javaMailSender;
+
     //재정의 가 된 UserDetail
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {

@@ -4,10 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import tds.dto.ApproveCarDto;
 import tds.dto.CarDto;
 import tds.mapper.CarMapper;
 import tds.vo.ApproveCarVo;
+import tds.vo.CarVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +58,39 @@ public class CarService {
                 (String)jo.get("carName"),
                 (String)jo.get("fuelType")
         );
-        System.out.println(carDto.toString());
+        CarVo carVo = new CarVo(
+                carDto.getCompanyNumber(),
+                carDto.getCarNumber(),
+                carDto.getCarId(),
+                carDto.getType(),
+                carDto.getCarName(),
+                carDto.getFuelType()
+        );
 
-        return false;
+       boolean result=carMapper.carRegistration(carVo);
+        if(result){
+            carMapper.stateUpdate(carVo.getCarId());
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    public JSONArray getCarList(int companyNumber){
+        List<CarVo> list=carMapper.getCarList(companyNumber);
+        System.out.println(list.toString());
+        JSONArray ja =new JSONArray();
+        for(CarVo carVo : list){
+            JSONObject jo =new JSONObject();
+            jo.put("carNumber",carVo.getCarNumber());
+            jo.put("carId",carVo.getCarId());
+            jo.put("type",carVo.getType());
+            jo.put("carName",carVo.getCarName());
+            jo.put("fuelType",carVo.getFuelType());
+            ja.put(jo);
+        }
+            return ja;
     }
 
 }

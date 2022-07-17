@@ -12,4 +12,18 @@
     <select id="getApproveCarId" resultType="String">
         SELECT approve_car_id FROM springproject.approvecar WHERE approve_car_number=#{approveCarNumber}
     </select>
+
+    <select id="getCarList" resultType="tds.vo.CarVo">
+        SELECT car_number,car_id,type,car_name,fuel_type FROM springproject.car WHERE company_number=#{companyNumber}
+    </select>
+
+    <insert id="carRegistration">
+            INSERT INTO springproject.car VALUES(#{companyNumber},#{carNumber},#{carId},#{type},#{carName},#{fuelType})
+    </insert>
+
+    <update id="stateUpdate">
+        UPDATE springproject.approvecar SET state='0' WHERE approve_car_id=#{carId}
+    </update>
+
+
 </mapper>

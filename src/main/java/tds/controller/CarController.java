@@ -15,6 +15,7 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
     //CarRegistration.js // DataInfo.js
     @GetMapping("/getSession")
     public Map<String,Object> getSession(HttpServletRequest request){
@@ -66,4 +67,14 @@ public class CarController {
         return carService.carRegistration(carList);
     }
 
+    @GetMapping("/getCarList")
+    public void getCarList(@RequestParam("companyNumber") int companyNumber,HttpServletResponse response){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(carService.getCarList(companyNumber));
+        }catch(Exception e){
+            System.out.println("getCarList   json err!! "+e);
+        }
+    }
 }

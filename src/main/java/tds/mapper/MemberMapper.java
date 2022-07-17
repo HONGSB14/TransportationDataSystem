@@ -16,4 +16,5 @@ public interface MemberMapper {
    String findPassword(String memberId,String memberName);
    String findEmail(String memberId);
    boolean passwordUpdate(String id,String passwordEncrypt);
+
 }
