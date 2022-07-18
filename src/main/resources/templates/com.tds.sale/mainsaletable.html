@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:replace="header.html :: header"></div>
+
+<div class="container text-center">
+    <!-- header -->
+    <div class="col-md-12 text-center py-5">
+        <h1>매출 현황</h1>
+    </div>
+    <!-- 일보 리스트 부분 -->
+    <div class="col-md-12">
+        <div id="headMonth" class="text-center">
+            <!--JS 에서 처리 -->
+        </div>
+    </div>
+    <!--버튼-->
+    <div class="row">
+        <div id="companyNumberCheck" class="col-md-2">
+            <!--JS 에서 처리 -->
+        </div>
+        <!-- 매출 검색 버튼 -->
+        <div class="offset-6 col-md-2 py-2">
+            <button type="button" class="form-control" data-bs-toggle="modal" data-bs-target="#searchSale">매출 검색</button>
+        </div>
+        <!-- 매출등록 버튼 -->
+        <div class="col-md-2 py-2">
+            <a href="/page/sale/registration"><button class="form-control" type="button">매출 등록</button></a>
+        </div>
+
+        <!-- 모달 -->
+        <div class="modal fade" id="searchSale" tabindex="-1" aria-labelledby="searchSale" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchSaleModalLabel">매출검색</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <!-- 달력 날짜 선택 란 -->
+                    <div id="monthChoice" class="modal-body">
+                        <!--JS 에서 처리-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="dateSearch()" class="form-control" data-bs-dismiss="modal">Search</button>
+                        <button type="button" class="form-control" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 테이블 표 -->
+    <div class="col-md-12">
+
+        <table class="table table-center table-bordered" id="daySaleTable">
+
+            <tr class="table-info">
+                <th class="text-center" colspan="6"> 합계 ( 월 )</th>
+            </tr>
+            <tr class="table-info"><th>유량 총 사용량</th><th>실입 총 수입</th><th>카드 총 수입</th><th>총 매출 </th><th colspan="2">총 실매출</th></tr>
+            <tr id="monthSaleTable">
+                <!--JS 에서 처리 -->
+            </tr>
+            <!-- 총 수입 (일) -->
+            <tr class="table-info">
+                <th class="text-center" colspan="6"> 일별 수입</th>
+            </tr>
+            <tr class="table-info"><th>날짜</th><th>유량 사용량 (L)</th><th>실입수입 (원)</th><th>카드 수입 (원)</th><th>총 매출 (원)</th><th>실 매출 (원)</th></tr>
+            <!--JS 에서 처리 -->
+        </table>
+    </div>
+</div>
+
+<!--WeekChart (pieChart) -->
+<div class="text-center py-2"><h3>주 매출비교 그래프</h3></div>
+<div  id="pie_chart" class="offset-2">
+    <!-- 주 매출 (일별)값 JS로 넘기 -->
+</div>
+
+<!-- MonthChart (line) -->
+<div class="text-center py-2"><h3>월 일별 매출비교</h3></div>
+<div id="line_chart">
+    <!-- 월 매출 (일별)값 JS로 넘기 -->
+</div>
+
+<!-- yearchart (column) -->
+<div class="text-center"><h3>년별 달 매출비교</h3></div>
+<div id="bar_chart" class="col-md-6">
+    <!-- 월 매출 (일별)값 JS로 넘기 -->
+</div>
+</div>
+
+
+
+<div th:replace="footer.html :: footer"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/js/sale/main.js"></script>
+</body>
+</html>
