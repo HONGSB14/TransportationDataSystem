@@ -66,7 +66,7 @@ public class CarController {
     public boolean carRegistration(@RequestParam("carList") String carList){
         return carService.carRegistration(carList);
     }
-
+    //CarRegistration.js
     @GetMapping("/getCarList")
     public void getCarList(@RequestParam("companyNumber") int companyNumber,HttpServletResponse response){
         try {
@@ -75,6 +75,17 @@ public class CarController {
             response.getWriter().print(carService.getCarList(companyNumber));
         }catch(Exception e){
             System.out.println("getCarList   json err!! "+e);
+        }
+    }
+
+    @GetMapping("approveCarList")
+    public void approveCarList(HttpServletResponse response){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(carService.approveCarList());
+        }catch(Exception e){
+            System.out.println("approveCarList json err!!  :"+e);
         }
     }
 }

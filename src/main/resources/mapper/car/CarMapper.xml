@@ -13,6 +13,10 @@
         SELECT approve_car_id FROM springproject.approvecar WHERE approve_car_number=#{approveCarNumber}
     </select>
 
+    <select id="approveCarList" resultType="tds.vo.ApproveCarVo">
+        SELECT approve_car_id,approve_car_number FROM springproject.approvecar WHERE state='1'
+    </select>
+
     <select id="getCarList" resultType="tds.vo.CarVo">
         SELECT car_number,car_id,type,car_name,fuel_type FROM springproject.car WHERE company_number=#{companyNumber}
     </select>

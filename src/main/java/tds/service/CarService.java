@@ -79,7 +79,6 @@ public class CarService {
 
     public JSONArray getCarList(int companyNumber){
         List<CarVo> list=carMapper.getCarList(companyNumber);
-        System.out.println(list.toString());
         JSONArray ja =new JSONArray();
         for(CarVo carVo : list){
             JSONObject jo =new JSONObject();
@@ -93,4 +92,15 @@ public class CarService {
             return ja;
     }
 
+    public JSONArray approveCarList(){
+        List<ApproveCarVo> list =carMapper.approveCarList();
+        JSONArray ja =new JSONArray();
+        for(ApproveCarVo vo :list) {
+            JSONObject jo = new JSONObject();
+            jo.put("approveCarId", vo.getApproveCarId());
+            jo.put("approveCarNumber", vo.getApproveCarNumber());
+            ja.put(jo);
+        }
+        return ja;
+    }
 }

@@ -23,4 +23,6 @@ public interface CarMapper {
 
     List<CarVo> getCarList(int companyNumber);
 
+    List<ApproveCarVo> approveCarList();
+
 }

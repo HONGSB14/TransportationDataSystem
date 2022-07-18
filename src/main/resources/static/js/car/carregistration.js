@@ -8,41 +8,19 @@ $.ajax({
 });
 
 let getApproveCarId="";
-
-
+//삭제 및 수정 배열담기
+let carNumberBox=[];
 $(function(){
 
     //DB에 저장되어있는 차량 번호 불러오기
     selectCarNumber();
-
-    //승인차량 리스트
-    $.ajax({
-        url:"/car/getCarList",
-        data:{"companyNumber":session},
-        success: function(data){
-            let html="";
-            if(data!=null){
-                      console.log(data);
-                for(let i=0; i<data.length; i++){
-
-                       html +=		   '<tr>' +
-                                                        '<td><input type="checkbox" class="form-check-input text-center" id="deleteCar" value="'+data[i].carNumber+'"></td>'+
-                                                      '<td>'+data[i].carNumber+'</td>'+
-                                                      '<td>'+data[i].type+'</td>'+
-                                                     '<td>'+data[i].carName+'</td>'+
-                                                     '<td>'+data[i].fuelType+'</td>'
-                                               '</tr>';
-
-                }
-                $("#carList").append(html);
-            }else{
-                      html +='<tr>현재 등록되어있는 차량이 존재하지 않습니다.</tr>';
-                      $("#carList").html(html);
-            }
-        }
-    });
+    //승인 차량 리스트
+    carList();
+    //승인가능한 차량 리스트
+    approveCarList();
 
 }); //문서 끝
+
 
 //DB에 저장되어있는 차량 번호 불러오기
 function selectCarNumber(){
@@ -99,3 +77,72 @@ function carRegistration(){
 }
 
 
+function carList(){
+   //승인차량 리스트
+    $.ajax({
+        url:"/car/getCarList",
+        data:{"companyNumber":session},
+        success: function(data){
+            let html="";
+            if(data!=null){
+                for(let i=0; i<data.length; i++){
+
+                       html +=		   '<tr>' +
+                                                        '<td><input type="checkbox" class="form-check-input text-center" id="checkBox'+data[i].carNumber+'" onclick="deleteCheck('+data[i].carNumber+')"></td>'+
+                                                      '<td>'+data[i].carNumber+'</td>'+
+                                                      '<td>'+data[i].type+'</td>'+
+                                                     '<td>'+data[i].carName+'</td>'+
+                                                     '<td>'+data[i].fuelType+'</td>'
+                                               '</tr>';
+
+                }
+                $("#carList").append(html);
+            }else{
+                      html +='<tr>현재 등록되어있는 차량이 존재하지 않습니다.</tr>';
+                      $("#carList").html(html);
+            }
+        }
+    });
+
+}
+
+//  승인가능한 차량 리스트
+function approveCarList(){
+
+    $.ajax({
+
+         url:"/car/approveCarList",
+         success: function(data){
+               html="";
+               for(let  i=0; i<data.length; i++){
+                    html +=         '<tr>'+
+                           						'<td>'+data[i].approveCarNumber+'</td>'+
+                           						'<td>'+data[i].approveCarId+'</td>'+
+                           					'</tr>';
+               }
+               $("#approveCarList").append(html);
+         }
+    });
+
+}
+
+function deleteCheck(carNumber){
+
+
+let boxId= "checkBox"+carNumber;
+let check=$('input:checkbox[id='+boxId+']').is(":checked") == true
+
+	if(check==true){
+	     carNumberBox.push(carNumber);
+	}else{
+		for(let i=0; i<carNumberBox.length; i++){
+			if(carNumberBox[i]===carNumber){
+			    carNumberBox.splice(i,1);
+			}
+		}
+	}
+}
+///차량 삭제
+function carDelete(){
+    console.log(carNumberBox);
+}
