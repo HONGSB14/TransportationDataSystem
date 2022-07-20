@@ -31,6 +31,7 @@ public class LocationService {
                 locationDto.getDate()
         );
         //입력
-        return locationMapper.locationData(locationVo);
+     return locationMapper.locationData(locationVo);
+
     }
 }

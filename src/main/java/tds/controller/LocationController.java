@@ -16,6 +16,7 @@ public class LocationController {
 
     @GetMapping("/locationData")
     public boolean locationData(@RequestParam("coordinate")String coordinate, @RequestParam("carNumber")String carNumber, @RequestParam("companyNumber") int companyNumber){
+         System.out.println(carNumber);
          return locationService.locationData(coordinate,carNumber,companyNumber);
     }
 }
