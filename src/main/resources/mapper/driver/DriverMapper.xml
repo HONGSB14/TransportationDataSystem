@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tds.mapper.DriverMapper">
+
+    <insert id="driverSignup">
+        INSERT INTO springproject.driver VALUES (#{companyNumber},#{driverNumber},#{name},#{note},#{date})
+    </insert>
+
+    <select id="driverNumberCheck" resultType="String">
+         SELECT driver_number FROM springproject.driver WHERE driver_number=#{driverNumber}
+    </select>
+
+    <select id="driverList" resultType="tds.vo.DriverVo">
+        SELECT driver_number,name,note,date FROM springproject.driver WHERE company_number=#{companyNumber}
+    </select>
+
+    <delete id="driverDelete">
+        DELETE FROM springproject.driver WHERE driver_number=#{driverNumber}
+    </delete>
+</mapper>

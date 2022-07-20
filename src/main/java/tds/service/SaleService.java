@@ -164,7 +164,7 @@ public class SaleService {
                 String.valueOf(jo.get("note")),
                 String.valueOf(jo.get("date") + " 00:00:00")
         );
-        System.out.println(saleDto.toString());
+
         SaleVo saleVo = new SaleVo(
                 saleDto.getCompanyNumber(),
                 0,
@@ -276,7 +276,7 @@ public class SaleService {
         }
 
 
-        System.out.println(ja);
+
         return ja;
     }
 

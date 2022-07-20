@@ -2,9 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
 </head>
 <body>
+<div th:replace="header.html :: header"></div>
+<!-- 승인 차량 테이블 표  -->
+<div class="text-center py-5">
+    <h1>현재 등록된 차량 리스트</h1>
+</div>
 
+<!-- 등록 된 차량 리스트 테이블 표 -->
+<div class="col-md-12">
+    <div class="offset-2 col-md-8 py-5">
+        <!--차량 삭제 버튼 -->
+        <div class="offset-10 col-md-2 py-2">
+            <button class="form-control" onclick="carDelete()" type="button">차량 삭제</button>
+        </div>
+        <table id="carList" class="table table-bordered text-center">
+            <tr class="table-warning"><th>선택</th><th>차 번호</th> <th>차량 종류</th> <th>차량 이름</th> <th>연료 종류</th></tr>
+            <!--JS 에서 처리 -->
+        </table>
+    </div>
+
+    <!-- 뒤로가기 버튼 -->
+    <div class="offset-4 col-md-4">
+        <div class="text-center">
+            <a href="/page/data/dataInfo"><button class="form-control">뒤로가기</button></a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: footer"></div>
+
+<script src="/js/car/carlist.js"></script>
 </body>
 </html>

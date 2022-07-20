@@ -69,8 +69,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //차량 등록 시
                 .ignoringAntMatchers("/car/carRegistration")
                 .ignoringAntMatchers("/car/getApproveCarId")
+                //차량 삭제 시
+                .ignoringAntMatchers("/car/carDelete")
                 //차량 리스트
-                .ignoringAntMatchers("/car/getCarList");
+                .ignoringAntMatchers("/car/getCarList")
+                //운전자 회원가입
+                .ignoringAntMatchers("/driver/driverSignup")
+                .ignoringAntMatchers("/driver/driverDelete");
     }
     @Autowired
     private MemberService  memberService;

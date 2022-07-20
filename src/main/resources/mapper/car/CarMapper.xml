@@ -5,6 +5,10 @@
 
 <mapper namespace="tds.mapper.CarMapper">
 
+    <select id="getCarInfo" resultType="tds.vo.CarVo">
+        SELECT car_id,car_number FROM springproject.car WHERE company_number=#{companyNumber}
+    </select>
+
     <select id="selectCarNumber" resultType="tds.vo.ApproveCarVo">
         SELECT approve_car_id,approve_car_number,state FROM springproject.approvecar  WHERE state='1'
     </select>
@@ -29,5 +33,12 @@
         UPDATE springproject.approvecar SET state='0' WHERE approve_car_id=#{carId}
     </update>
 
+    <update id="stateUpdate2">
+        UPDATE springproject.approvecar SET state='1' WHERE approve_car_id=#{carId}
+    </update>
+
+    <delete id="carDelete" parameterType="String">
+            DELETE FROM springproject.car WHERE car_id=#{carId}
+    </delete>
 
 </mapper>

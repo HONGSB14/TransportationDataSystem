@@ -23,10 +23,15 @@ public class CarService {
 
 
     public JSONArray getCarInfo(int companyNumber){
-
-        Map<String,Object> carList=carMapper.getCarInfo(companyNumber);
-
-      return null;
+        List<CarVo> list=carMapper.getCarInfo(companyNumber);
+        JSONArray ja =new JSONArray();
+        for(CarVo carVo : list ){
+            JSONObject jo= new JSONObject();
+            jo.put("carId",carVo.getCarId());
+            jo.put("carNumber",carVo.getCarNumber());
+            ja.put(jo);
+        }
+      return ja;
     }
 
     public JSONArray selectCarNumber(){
@@ -102,5 +107,18 @@ public class CarService {
             ja.put(jo);
         }
         return ja;
+    }
+
+    public boolean carDelete(List<String> carId){
+
+        for(int i=0; i<carId.size(); i++){
+           boolean result= carMapper.carDelete(carId.get(i));
+           if(result){
+               carMapper.stateUpdate2(carId.get(i));
+           }else{
+               return false;
+           }
+        }
+        return true;
     }
 }

@@ -113,9 +113,22 @@ public class PagingController {
     public String carRegistration(){
         return "com.tds.car/carregistration";
     }
-    @GetMapping("car/carList")
+    @GetMapping("/car/carList")
     public String carList(){
         return "com.tds.car/carlist";
     }
+
+    ///////////////////////////////////////////DRIVER PAGE/////////////////////////////////////////////////////
+
+    @GetMapping("/driver/driverRegistration")
+    public String driverRegistration(){
+        return "com.tds.driver/driverregistration";
+    }
+
+    @GetMapping("driver/driverList")
+    public String driverList(){
+        return "com.tds.driver/driverlist";
+    }
+
 
 }

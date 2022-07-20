@@ -7,6 +7,7 @@ import tds.service.CarService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,7 +26,7 @@ public class CarController {
         return map;
     }
     //DataInfo.js
-    @PostMapping("/getCarInfo")
+    @GetMapping("/getCarInfo")
     public void getCarInfo(@RequestParam("companyNumber") int companyNumber, HttpServletResponse response){
 
         try {
@@ -78,7 +79,7 @@ public class CarController {
         }
     }
 
-    @GetMapping("approveCarList")
+    @GetMapping("/approveCarList")
     public void approveCarList(HttpServletResponse response){
         try {
             response.setCharacterEncoding("UTF-8");
@@ -87,5 +88,10 @@ public class CarController {
         }catch(Exception e){
             System.out.println("approveCarList json err!!  :"+e);
         }
+    }
+
+    @DeleteMapping("/carDelete")
+    public boolean carDelete(@RequestParam(value="carId[]") List<String> carId){
+        return carService.carDelete(carId);
     }
 }
