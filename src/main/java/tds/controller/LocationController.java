@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 import tds.service.LocationService;
 
 @RestController
-@RequestMapping("location")
+@RequestMapping("/location")
 public class LocationController {
 
     @Autowired
     private LocationService locationService;
 
-    @GetMapping
+    @GetMapping("/locationData")
     public boolean locationData(@RequestParam("coordinate")String coordinate, @RequestParam("carNumber")String carNumber, @RequestParam("companyNumber") int companyNumber){
          return locationService.locationData(coordinate,carNumber,companyNumber);
     }

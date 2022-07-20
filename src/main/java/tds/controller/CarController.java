@@ -94,4 +94,15 @@ public class CarController {
     public boolean carDelete(@RequestParam(value="carId[]") List<String> carId){
         return carService.carDelete(carId);
     }
+
+    @GetMapping("/carInfo")
+    public void carInfo(@RequestParam("companyNumber")int companyNumber ,HttpServletResponse response){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(carService.carInfo(companyNumber));
+        }catch(Exception e){
+            System.out.println("getCarInfo json err!! "+e);
+        }
+    }
 }

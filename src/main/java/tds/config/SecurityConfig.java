@@ -75,7 +75,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/car/getCarList")
                 //운전자 회원가입
                 .ignoringAntMatchers("/driver/driverSignup")
-                .ignoringAntMatchers("/driver/driverDelete");
+                .ignoringAntMatchers("/driver/driverDelete")
+              .ignoringAntMatchers("http://ws.bus.go.kr/api/rest/buspos/getBusPosByRtid/**");
+
     }
     @Autowired
     private MemberService  memberService;
