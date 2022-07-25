@@ -35,8 +35,7 @@ function map(){
     imageSize = new kakao.maps.Size(30, 39), // 마커이미지의 크기입니다
     imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-
-	///////////////////////////////////////////////////////////버스 위치 ////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////버스 위치 ////////////////////////////////////////////
 
 
 	setInterval(function(){
@@ -44,7 +43,7 @@ function map(){
     	for (var i = 0; i < markers.length; i++) {
     	        markers[i].setMap(null);
     	}
-        markers = [];
+    	markers=[];
        console.log(markers);
 		$.ajax({
 			url:"/car/carInfo",
@@ -52,8 +51,6 @@ function map(){
 			data:{"companyNumber":session},
 			contentType:"application/json; charset:UTF-8",
 			success:function(data){
-
-
 
 			console.log(data);
 				if(data){
@@ -80,6 +77,7 @@ function map(){
 //                                                    }
 //                                                }
 //                                        });
+
 	                //마커 생성
 					var marker= new kakao.maps.Marker ({
 							position: new kakao.maps.LatLng(data[i].tmY,data[i].tmX),
@@ -94,5 +92,5 @@ function map(){
 				}
 			}
 		});
-	},5000);
+	},8000);
 }
