@@ -156,7 +156,8 @@ public class MemberService implements UserDetailsService {
                 StringBuilder authKey= new StringBuilder();
                 html.append("<html><body><h3>TransportationDataSystem</h3>");
                 authKey.append(randomNumber);
-                html.append("<h3>회원님의 비밀번호는 <h3><br>");
+                html.append("<h3>주의**개인정보 노출위험이 있습니다. <h3><br><br><br>");
+                html.append("<h3>회원님의 인증번호는 <h3><br>");
                 html.append("<h1>"+authKey+"</h1><br>");
                 html.append("<h3>입니다. <h3><br>");
                 html.append("</body></html>");
