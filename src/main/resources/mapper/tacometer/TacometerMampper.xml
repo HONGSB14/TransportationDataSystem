@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="tds.mapper.TacometerMapper">
+
+    <select id="getLocation" resultType="tds.vo.TacometerVo">
+        SELECT start_location,date FROM springproject.tacometer WHERE company_number=#{companyNumber}
+    </select>
+
+
+</mapper>
